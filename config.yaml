@@ -54,3 +54,15 @@ params:
       value: 10%
     - name: Quizes
       value: 20%
+  classroom:
+    lecture:
+      location: Old Chemistry 116
+      days: Mondays & Wednesdays
+      time: 10:05 - 11:20 am
+    labs:
+      - location: Old Chemistry 116
+        days: Fridays
+        time: 10:05 - 11:20 am
+      - location: Old Chemistry 116
+        days: Fridays
+        time: 11:45 am - 1:00 pm
