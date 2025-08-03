@@ -15,7 +15,7 @@ menu:
   - name: Canvas
     pre: <i class="fas fa-chalkboard-teacher"></i>
     weight: 3
-    url: https://canvas.duke.edu/courses/51086
+    url: https://canvas.duke.edu/courses/61210
   - name: Github
     pre: <i class='fa fa-github fa-fw'></i>
     weight: 6
