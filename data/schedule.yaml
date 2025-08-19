@@ -253,18 +253,6 @@ schedule:
   slides:
   screencast:
   readings:
-    - text: Minimal make
-      link: https://kbroman.org/minimal_make/
-    - text: Why use make
-      link: https://bost.ocks.org/mike/make/
-  suppmat:
-
-- week: 10
-  day: 2
-  lecture: "Databases & dplyr"
-  slides:
-  screencast:
-  readings:
     - text: Shiny Docs & Gallery
       link: http://shiny.rstudio.com/
     - text: Widget Gallery
@@ -273,10 +261,17 @@ schedule:
       link: https://mastering-shiny.org/
   suppmat:
 
+- week: 10
+  day: 2
+  lecture: "Adv Shiny"
+  slides:
+  screencast:
+  readings:
+
 
 - week: 11
   day: 0
-  lecture: "DuckDB & SQL"
+  lecture: "Databases & dplyr"
   slides:
   screencast:
   readings:
@@ -292,7 +287,7 @@ schedule:
 
 - week: 11
   day: 2
-  lecture: "bslib & dashboards"
+  lecture: "DuckDB & SQL"
   slides:
   screencast:
   readings:
@@ -300,7 +295,7 @@ schedule:
       link: https://duckdb.org/docs/sql/introduction
     - text: Modern SQL Style Guide
       link: https://gist.github.com/mattmc3/38a85e6a4ca1093816c08d4815fbebfb
-
+  suppmat:
 
 
 - week: 12
@@ -353,28 +348,15 @@ schedule:
 
 - week: 14
   day: 2
-  lecture: "R Packages"
+  lecture: "<i>TBD</i>"
   screencast:
   slides:
   suppmat:
 
 - week: 15
   day: 0
-  lecture: "Project Session"
+  lecture: "<i>TBD</i>"
   slides:
-  screencast:
-  readings:
-    - text: R Packages
-      link: https://r-pkgs.org/
-    - text: usethis
-      link: https://usethis.r-lib.org/
-    - text: Roxygen2
-      link: https://roxygen2.r-lib.org/
-    - text: testthat
-      link: https://testthat.r-lib.org/
-  suppmat:
-
-  slides: 
   screencast:
   readings:
   suppmat:
