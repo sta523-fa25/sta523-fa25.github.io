@@ -2,20 +2,9 @@ startdate: "2025-08-25"
 dateFormat: 'Mon, Jan 2'
 schedule:
 
-- week: 1
-  day: 0
-  lecture: "Welcome & Syllabus"
-  slides:
-  screencast:
-  suppmat:
-  readings:
-    - text: GitHub Auth Guide
-      link: https://github.com/DukeStatSci/github_auth_guide
-    - text: Happy Git and GitHub
-      link: http://happygitwithr.com/
 
 - week: 1
-  day: 2
+  day: 0
   lecture: "Types and Control Flow in R"
   slides:
   screencast:
@@ -30,13 +19,10 @@ schedule:
     - text: An Informal Introduction to Python
       link: https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator
 
-- week: 2
-  day: 0
-  lecture: "<i>No class - Labor Day</i>"
 
-- week: 2
+- week: 1
   day: 2
-  lecture: "Error checking, functions, and loops"
+  lecture: "Errors, functions, and loops"
   slides:
   screencast:
   suppmat:
@@ -45,8 +31,25 @@ schedule:
     - text: Errors and Exceptions
       link: https://docs.python.org/3/tutorial/errors.html
 
-- week: 3
+- week: 1
+  day: 4
+  lecture: "<i>First lab sessions</i>"
+  slides:
+  screencast:
+  suppmat:
+  readings:
+    - text: GitHub Auth Guide
+      link: https://github.com/DukeStatSci/github_auth_guide
+    - text: Happy Git and GitHub
+      link: http://happygitwithr.com/
+
+- week: 2
   day: 0
+  lecture: "<i>No class - Labor Day</i>"
+
+
+- week: 2
+  day: 2
   lecture: "Lists, Attributes, & S3"
   slides:
   screencast:
@@ -57,55 +60,67 @@ schedule:
     - text: Lists, Sets and Dicts
       link: https://docs.python.org/3/tutorial/datastructures.html
 
+
+- week: 3
+  day: 0
+  lecture: "Writing R Packages"
+  screencast:
+  slides:
+  readings:
+    - text: R Packages
+      link: https://r-pkgs.org/
+    - text: usethis
+      link: https://usethis.r-lib.org/
+    - text: Roxygen2
+      link: https://roxygen2.r-lib.org/
+  suppmat:
+
 - week: 3
   day: 2
-  lecture: "Matrices, data frames, & subsetting"
-  slides:
+  lecture: "testthat"
   screencast:
+  slides:
   readings:
-    - text: Adv-R - Subsetting
-      link: http://adv-r.had.co.nz/Subsetting.html
+    - text: testthat
+      link: https://testthat.r-lib.org/
+    - text: R Packages - Testing
+      link: https://r-pkgs.org/tests.html
   suppmat:
-    - text: NumPy API Reference
-      link: https://numpy.org/doc/stable/reference/index.html
-    - text: Broadcasting
-      link: https://numpy.org/doc/stable/user/basics.broadcasting.html
-    - text: Advanced indexing
-      link: https://numpy.org/doc/stable/user/basics.indexing.html#advanced-indexing
 
 - week: 4
   day: 0
-  lecture: "Tidy data & dplyr"
+  lecture: "LLMs & R"
+  screencast:
+  slides:
+  readings:
+    - text: Getting started with Ellmer
+      link: https://ellmer.tidyverse.org/articles/ellmer.html
+  suppmat:
+
+- week: 4
+  day: 2
+  lecture: "Tidy data, dplyr, & tidyr"
   slides:
   screencast:
   readings:
     - text: Tidy Data paper
       link: https://vita.had.co.nz/papers/tidy-data.pdf
-    - text: dplyr Vignette
-      link: https://dplyr.tidyverse.org/articles/dplyr.html
     - text: R4DS - tidy data
       link: http://r4ds.had.co.nz/tidy-data.html
     - text: Data transformation cheatsheet
       link: https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf
-  suppmat:
-    - text: Python for Data Analysis
-      link: https://wesmckinney.com/book/pandas-basics.html
-    - text: Group By
-      link: https://pandas.pydata.org/docs/user_guide/groupby.html
-
-- week: 4
-  day: 2
-  lecture: "tidyr"
-  slides:
-  screencast:
-  readings:
     - text: tidyr pivoting
       link: https://tidyr.tidyverse.org/articles/pivot.html
     - text: tidyr rectangling
       link: https://tidyr.tidyverse.org/articles/rectangle.html
   suppmat:
+    - text: Python for Data Analysis
+      link: https://wesmckinney.com/book/pandas-basics.html
+    - text: Group By
+      link: https://pandas.pydata.org/docs/user_guide/groupby.html
     - text: Reshaping
-      link: https://pandas.pydata.org/docs/user_guide/reshaping.
+      link: https://pandas.pydata.org/docs/user_guide/reshaping.html
+
 
 - week: 5
   day: 0
@@ -123,7 +138,7 @@ schedule:
 
 - week: 5
   day: 2
-  lecture: "ggplot2"
+  lecture: "ggplot2 & Visualization Design"
   slides:
   screencast:
   readings:
@@ -141,12 +156,12 @@ schedule:
 
 - week: 6
   day: 0
-  lecture: "Visualization Design"
+  lecture: "TBD"
   slides:
   screencast:
   readings:
   suppmat:
-
+ 
 - week: 6
   day: 2
   lecture: "Text processing & Regular expressions"
