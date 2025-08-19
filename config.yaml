@@ -52,7 +52,7 @@ params:
       value: 40%
     - name: Project
       value: 10%
-    - name: Quizes
+    - name: Quizzes
       value: 20%
   classroom:
     lecture:
