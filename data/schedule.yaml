@@ -312,10 +312,6 @@ schedule:
 
 - week: 12
   day: 2
-  lecture: "<i>No class - Thanksgiving Break</i>"
-
-- week: 13
-  day: 0
   lecture: "Spatial data"
   slides:
   screencast:
@@ -327,7 +323,7 @@ schedule:
   suppmat:
 
 - week: 13
-  day: 2
+  day: 0
   lecture: "Tidy Models"
   slides:
   screencast:
@@ -336,9 +332,9 @@ schedule:
       link: https://cran.r-project.org/web/packages/sf/vignettes/
   suppmat:
 
-- week: 14
-  day: 0
-  lecture: "More Tidy Models"
+- week: 13
+  day: 2
+  lecture: "Model Tuning"
   screencast:
   slides:
   readings:
@@ -347,16 +343,12 @@ schedule:
   suppmat:
 
 - week: 14
-  day: 2
+  day: 0
   lecture: "<i>TBD</i>"
   screencast:
   slides:
   suppmat:
 
-- week: 15
-  day: 0
-  lecture: "<i>TBD</i>"
-  slides:
-  screencast:
-  readings:
-  suppmat:
+- week: 14
+  day: 2
+  lecture: "<i>No class - Thanksgiving Break</i>"
