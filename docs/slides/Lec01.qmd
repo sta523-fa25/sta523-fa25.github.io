@@ -35,7 +35,7 @@ options(
     - [colin.rundel@duke.edu](mailto:colin.rundel@duke.edu) / 
       [cr173@duke.edu](mailto:cr173@duke.edu) /
       [rundel@gmail.com ](mailto:rundel@gmail.com)
-    - Office hours: TBD (see course website)
+    - Office hours: Wednesdays 1-2 pm (in person or Zoom) or by appointment
 
 <br/>
 
@@ -65,9 +65,11 @@ options(
 - Labs will begin this week
 
 
-## Grading
+## Assessment
 
-This course is assessed 100% on your coursework (there is no exam). We will be assessing you based on the following assignments,
+This course is graded 100% on your coursework (there are no exams). 
+
+We will be assessing you based on the following assignments,
 
 <br/>
 
@@ -119,9 +121,9 @@ This course is assessed 100% on your coursework (there is no exam). We will be a
 
 - AI tools are not a replacement for understanding the material, they can be a tool to help you understand the material.
 
-- Reaading code and writing code are both skills that take time and practice to develop.
+- Reaading code and writing code are both skills that take time and practice to develop - both are still essential skills.
 
-- Agentic vs ChatBots vs Autocomplete
+- Nature of the tools is changing rapidly - Autocomplete vs ChatBots vs Agentic
 
 
 
@@ -249,7 +251,7 @@ R has two types of vectors (that everything is built on):
 
 ## Atomic Vectors
 
-R has six atomic vector types, we can check the type of any object in R using the `typeof()` function
+R has six atomic vector types, we can check the type of any object in R using the `typeof()` function. `mode()` is a higher level abstraction used to group similar types together.
 
 | `typeof()`  |  `mode()`  |
 |:------------|:-----------|
@@ -263,10 +265,7 @@ R has six atomic vector types, we can check the type of any object in R using th
 
 
 ::: {.aside}
-Mode is a higher level abstraction, we will discuss this in detail a bit later.
-
-There are additional types in R, e.g. `list`, `closure`, `environment`, etc. We will see these in the next couple of weeks.
-See `?typeof` for more information.
+There are additional types in R, e.g. `list`, `closure`, `environment`, etc. We will see these in the next couple of lectures. See `?typeof` for more information.
 :::
 
 
@@ -302,7 +301,7 @@ R will let you use `T` and `F` as shortcuts to `TRUE` and `FALSE`, this is a bad
 
 ```{r}
 T
-T = 0
+T = "FALSE"
 T
 ```
 
@@ -424,7 +423,7 @@ c(1,c(2, c(3)))
 ```
 
 ::: {.aside}
-**Note** - atomic vectors are inherently flat / 1d.
+**Note** - atomic vectors are inherently flat / 1d, so nesting `c()` calls does not create a nested structure (when working with atomic vectors).
 :::
 
 
@@ -645,7 +644,7 @@ typeof(NA_complex_)
 ::::
 
 ::: aside
-This should make sense as `NA` values can appear along over values in atomic vectors.
+This makes sense as `NA` values can appear along with other values in atomic vectors.
 :::
 
 ## NA stickiness
@@ -672,7 +671,7 @@ sum(c(1, 2, 3, NA))
 
 . . .
 
-Aggregation / summarization functions (e.g. `sum()`, `mean()`, `sd()`, etc.) will often have a `na.rm` argument which will allow you to *drop* missing values.
+Aggregation / summarization functions (e.g. `sum()`, `mean()`, `sd()`, etc.) will often have a `na.rm` argument which *drops* the missing values from the calculation.
 
 ::: {.small}
 ```{r}
@@ -860,14 +859,16 @@ countdown::countdown(minutes=5)
 
 ## Vectorized?
 
+::: {.medium}
 ```{r}
 x = c(TRUE,FALSE,TRUE)
 y = c(FALSE,TRUE,TRUE)
 ```
+:::
 
 . . .
 
-:::: {.columns}
+:::: {.columns .medium}
 ::: {.column width='50%'}
 ```{r}
 x | y
@@ -875,11 +876,12 @@ x & y
 ```
 :::
 
-::: {.column width='50%'}
+::: {.column .fragment width='50%'}
 ```{r}
 #| error: true
 x || y
 x && y
+TRUE && FALSE
 ```
 :::
 ::::
@@ -898,7 +900,7 @@ x && y
 
 Almost all of the basic mathematical operations (and many other functions) in R are vectorized.
 
-:::: {.columns}
+:::: {.columns .medium}
 ::: {.column width='50%'}
 ```{r}
 c(1, 2, 3) + c(3, 2, 1)
@@ -948,9 +950,11 @@ y & z
 
 . . .
 
+::: {.small}
 ```{r}
 x | z
 ```
+:::
 
 
 
@@ -958,13 +962,15 @@ x | z
 
 The same length coercion rules apply for most basic mathematical operators,
 
+::: {.small}
 ```{r}
 x = c(1, 2, 3)
 y = c(5, 4)
 z = 10L
 ```
+:::
 
-:::: {.columns}
+:::: {.columns .small}
 ::: {.column width='50%'}
 ```{r}
 x + x
@@ -982,9 +988,11 @@ log(x)+z
 
 . . .
 
+::: {.small}
 ```{r}
 x %% y
 ```
+:::
 
 
 
