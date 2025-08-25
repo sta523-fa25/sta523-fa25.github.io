@@ -5,8 +5,8 @@ schedule:
 
 - week: 1
   day: 0
-  lecture: "Types and Control Flow in R"
-  slides:
+  lecture: "Welcome & Types in R"
+  slides: Lec01
   screencast:
   readings:
     - text: Tidyverse style guide
@@ -22,7 +22,7 @@ schedule:
 
 - week: 1
   day: 2
-  lecture: "Errors, functions, and loops"
+  lecture: "Control Flow"
   slides:
   screencast:
   suppmat:
