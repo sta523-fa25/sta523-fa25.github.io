@@ -23,7 +23,7 @@ schedule:
 - week: 1
   day: 2
   lecture: "Control Flow"
-  slides:
+  slides: Lec02
   screencast:
   suppmat:
     - text: Control flow
