@@ -51,7 +51,7 @@ schedule:
 - week: 2
   day: 2
   lecture: "Lists, Attributes, & S3"
-  slides:
+  slides: Lec03
   screencast:
   readings:
     - text: Adv R - OO Field Guide - S3
@@ -59,6 +59,20 @@ schedule:
   suppmat:
     - text: Lists, Sets and Dicts
       link: https://docs.python.org/3/tutorial/datastructures.html
+
+- week: 2
+  day: 2
+  hide_date: true
+  lecture: "Subsetting"
+  slides: Lec04.1
+  screencast:
+  readings:
+    - text: Adv R - Subsetting
+      link: http://adv-r.had.co.nz/Subsetting.html
+  suppmat:
+    - text: Lists, Sets and Dicts
+      link: https://docs.python.org/3/tutorial/datastructures.html
+
 
 
 - week: 3

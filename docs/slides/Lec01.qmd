@@ -1088,6 +1088,6 @@ c("Alice", "Bob", "Carol") <= "B"
 ::::
 
 ::: {.aside}
-Note - to better understand how this works, i.e. the ordering used, see [ASCII code](https://www.ascii-code.com/)
+Note - to better understand how this works, i.e. the ordering used, see [ASCII code](https://www.ascii-code.com/) and https://stackoverflow.com/questions/7229408/what-are-the-r-sorting-rules-of-character-vectors
 :::
 

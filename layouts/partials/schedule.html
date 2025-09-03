@@ -39,7 +39,11 @@
             {{ end }}
             {{ $prev.Set "week" .week }}
           </td>
-          <td class="schedule-date"> {{ dateFormat $schedule.dateFormat $date }}</td>
+          <td class="schedule-date">
+            {{ if not .hide_date }}
+              {{ dateFormat $schedule.dateFormat $date }}
+            {{ end }}
+          </td>
           <td class="schedule-slides">
             
             {{ if (not .lab)}}
