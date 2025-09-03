@@ -42,8 +42,8 @@ params:
       email: colin.rundel@duke.edu
       hours:
       - loc: 204 Old Chemistry / Zoom
-        day: TBD
-        time: ""
+        day: Wednesdays
+        time: "12:00 - 1:30 pm"
   assignments:
     - name: Homework
       type: Team
