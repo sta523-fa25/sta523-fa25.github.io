@@ -64,7 +64,7 @@ schedule:
   day: 2
   hide_date: true
   lecture: "Subsetting"
-  slides: Lec04.1
+  slides: Lec04
   screencast:
   readings:
     - text: Adv R - Subsetting
@@ -79,7 +79,7 @@ schedule:
   day: 0
   lecture: "Writing R Packages"
   screencast:
-  slides:
+  slides: Lec05
   readings:
     - text: R Packages
       link: https://r-pkgs.org/
