@@ -646,3 +646,28 @@ In practice, TDD may not be followed strictly, but the principles remain valuabl
 
 * Writing tests 2nd can lead to missing edge cases / faulty assumptions
 
+# Why Packages?
+
+## Benefits of packages
+
+Organizing your projects as a package provides many advantages:
+
+* Benefit from the existing infrastructure for package development
+
+* Easier to share and distribute your code (dependencies, installation, documentation, etc.)
+
+* Easier to bundle and document data sets
+
+* Better support for testing and documentation
+
+* Tends to lead to better organized, modular code and overall better design
+
+## Packages and LLMs
+
+We will go into this more on Monday, but packages are also a great way to structure your code to work with LLMs:
+
+* Proscribed structure makes it easier for the LLMs to understand your codebase
+
+* Better context management
+
+* Better grounding and easier interation through tests and checks

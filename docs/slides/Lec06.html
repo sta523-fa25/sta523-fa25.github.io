@@ -1194,7 +1194,7 @@ Dr. Colin Rundel
 <span id="cb6-5"><a href></a>  <span class="fu">expect_type</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">1</span>L, <span class="dv">1</span>L), <span class="st">&quot;integer&quot;</span>)</span>
 <span id="cb6-6"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
 </div>
 </div>
@@ -1314,7 +1314,7 @@ Objects equal but not identical
 <span id="cb15-18"><a href></a>  <span class="fu">expect_true</span>(ci_99[<span class="st">&quot;upper&quot;</span>] <span class="sc">-</span> ci_99[<span class="st">&quot;lower&quot;</span>] <span class="sc">&gt;</span> ci_95[<span class="st">&quot;upper&quot;</span>] <span class="sc">-</span> ci_95[<span class="st">&quot;lower&quot;</span>])</span>
 <span id="cb15-19"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 </div>
@@ -1394,7 +1394,7 @@ Backtrace:
 <span id="cb20-12"><a href></a>  <span class="fu">expect_error</span>(<span class="fu">calculate_discount</span>(<span class="sc">-</span><span class="dv">50</span>, <span class="dv">10</span>), <span class="st">&quot;Price cannot be negative&quot;</span>)</span>
 <span id="cb20-13"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🥇</code></pre>
 </div>
 </div>
 </div>
@@ -1604,7 +1604,7 @@ Backtrace:
 <span id="cb32-6"><a href></a>  <span class="fu">expect_true</span>(<span class="fu">is_palindrome</span>(<span class="fu">numeric</span>(<span class="dv">0</span>)))  <span class="co"># Empty vector</span></span>
 <span id="cb32-7"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 😀</code></pre>
 </div>
 </div>
 </div>
@@ -1632,7 +1632,7 @@ Backtrace:
 <span id="cb35-6"><a href></a>  <span class="fu">expect_true</span>(<span class="fu">is_palindrome</span>(<span class="fu">numeric</span>(<span class="dv">0</span>)))  <span class="co"># Empty vector</span></span>
 <span id="cb35-7"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🥳</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 </div>
@@ -1669,7 +1669,7 @@ Backtrace:
 <span id="cb41-2"><a href></a>  <span class="fu">expect_error</span>(<span class="fu">is_palindrome</span>(<span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
 <span id="cb41-3"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🎊</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </div>
@@ -1683,6 +1683,31 @@ Backtrace:
 <li><p>Tests should not be an after thought once your code is “done”</p></li>
 <li><p>Refactoring is easier and safer with a solid test suite</p></li>
 <li><p>Writing tests 2nd can lead to missing edge cases / faulty assumptions</p></li>
+</ul>
+</section></section>
+<section>
+<section id="why-packages" class="title-slide slide level1 center">
+<h1>Why Packages?</h1>
+
+</section>
+<section id="benefits-of-packages" class="slide level2">
+<h2>Benefits of packages</h2>
+<p>Organizing your projects as a package provides many advantages:</p>
+<ul>
+<li><p>Benefit from the existing infrastructure for package development</p></li>
+<li><p>Easier to share and distribute your code (dependencies, installation, documentation, etc.)</p></li>
+<li><p>Easier to bundle and document data sets</p></li>
+<li><p>Better support for testing and documentation</p></li>
+<li><p>Tends to lead to better organized, modular code and overall better design</p></li>
+</ul>
+</section>
+<section id="packages-and-llms" class="slide level2">
+<h2>Packages and LLMs</h2>
+<p>We will go into this more on Monday, but packages are also a great way to structure your code to work with LLMs:</p>
+<ul>
+<li><p>Proscribed structure makes it easier for the LLMs to understand your codebase</p></li>
+<li><p>Better context management</p></li>
+<li><p>Better grounding and easier interation through tests and checks</p></li>
 </ul>
 
 </section></section>
