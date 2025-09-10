@@ -93,7 +93,7 @@ schedule:
   day: 2
   lecture: "testthat"
   screencast:
-  slides:
+  slides: Lec06
   readings:
     - text: testthat
       link: https://testthat.r-lib.org/
