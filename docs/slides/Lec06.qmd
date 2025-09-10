@@ -1,5 +1,5 @@
 ---
-title: "testthat"
+title: "Testing with testthat"
 subtitle: "Lecture 06"
 author: "Dr. Colin Rundel"
 footer: "Sta 523 - Fall 2025"

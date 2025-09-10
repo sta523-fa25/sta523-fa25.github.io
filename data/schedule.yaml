@@ -91,7 +91,7 @@ schedule:
 
 - week: 3
   day: 2
-  lecture: "testthat"
+  lecture: "Testing with testthat"
   screencast:
   slides: Lec06
   readings:
