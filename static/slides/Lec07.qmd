@@ -1,0 +1,31 @@
+---
+title: "LLMs and R"
+subtitle: "Lecture 07"
+author: "Dr. Colin Rundel"
+footer: "Sta 523 - Fall 2025"
+format:
+  revealjs:
+    theme: slides.scss
+    transition: fade
+    slide-number: true
+    self-contained: true
+execute:
+  echo: true
+  warning: true
+engine: knitr
+---
+
+```{r setup}
+#| message: False
+#| warning: False
+#| include: False
+knitr::opts_chunk$set(
+  fig.align = "center", fig.retina = 2, dpi = 150
+)
+
+library(testthat)
+
+options(width=50)
+options(tibble.width = 50)
+```
+
