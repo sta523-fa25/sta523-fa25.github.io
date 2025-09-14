@@ -46,7 +46,7 @@ make push           # Build, commit, and push changes to git
 ## Slide Development
 
 Slides are created as Quarto documents (`.qmd`) using:
-- **Format**: `live-revealjs` with custom theme (`slides.scss`)
+- **Format**: `revealjs` with custom theme (`slides.scss`)
 - **Engine**: knitr for R code execution
 - **Extensions**: Uses `drop` plugin and various Quarto extensions in `_extensions/`
 - **Rendering**: `quarto render` for HTML, `renderthis::to_pdf()` for PDF conversion
