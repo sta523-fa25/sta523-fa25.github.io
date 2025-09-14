@@ -219,6 +219,17 @@ formatC(x * y, digits = 16)
 Partly why we're using GPT 4.1 is because it still makes this mistake - GPT-5 reports the correct answer (but it takes a suspiciously long time to get the right answer).
 :::
 
+
+## Want to watch ChatGPT lose it? {.scrollable}
+
+::: {.xsmall}
+```{r seahorse3}
+#| cache: true
+chat$chat("Does a seahorse emoji exist?")
+```
+:::
+
+
 ## Hadley's initial "conclusions"
 
 <p/>
