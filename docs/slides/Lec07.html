@@ -1891,42 +1891,52 @@ is 1,524,157,763,907,942.</code></pre>
 <h4 id="reading">Reading</h4>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
-<span id="cb45-2"><a href></a>  <span class="cf">function</span>(path) <span class="fu">dir</span>(path),</span>
-<span id="cb45-3"><a href></a>  <span class="at">name =</span> <span class="st">&quot;ls&quot;</span>,</span>
-<span id="cb45-4"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Lists the files in the given directory&quot;</span>,</span>
-<span id="cb45-5"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb45-6"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb45-7"><a href></a>  )</span>
-<span id="cb45-8"><a href></a>) )</span>
-<span id="cb45-9"><a href></a></span>
-<span id="cb45-10"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
-<span id="cb45-11"><a href></a>  <span class="cf">function</span>(path) readr<span class="sc">::</span><span class="fu">read_file</span>(path),</span>
-<span id="cb45-12"><a href></a>  <span class="at">name =</span> <span class="st">&quot;read_file&quot;</span>,</span>
-<span id="cb45-13"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Read the content of a file&quot;</span>,</span>
-<span id="cb45-14"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb45-15"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb45-16"><a href></a>  )</span>
-<span id="cb45-17"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb45-2"><a href></a>  <span class="cf">function</span>(path) {</span>
+<span id="cb45-3"><a href></a>    <span class="fu">dir</span>(path)</span>
+<span id="cb45-4"><a href></a>  },</span>
+<span id="cb45-5"><a href></a>  <span class="at">name =</span> <span class="st">&quot;ls&quot;</span>,</span>
+<span id="cb45-6"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Lists the files in the given directory&quot;</span>,</span>
+<span id="cb45-7"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb45-8"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
+<span id="cb45-9"><a href></a>  )</span>
+<span id="cb45-10"><a href></a>) )</span>
+<span id="cb45-11"><a href></a></span>
+<span id="cb45-12"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
+<span id="cb45-13"><a href></a>  <span class="cf">function</span>(path) {</span>
+<span id="cb45-14"><a href></a>    readr<span class="sc">::</span><span class="fu">read_file</span>(path)</span>
+<span id="cb45-15"><a href></a>  },</span>
+<span id="cb45-16"><a href></a>  <span class="at">name =</span> <span class="st">&quot;read_file&quot;</span>,</span>
+<span id="cb45-17"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Read the content of a file&quot;</span>,</span>
+<span id="cb45-18"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb45-19"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
+<span id="cb45-20"><a href></a>  )</span>
+<span id="cb45-21"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column">
 <h4 id="writing">Writing</h4>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
-<span id="cb46-2"><a href></a>  <span class="cf">function</span>(content, path) readr<span class="sc">::</span><span class="fu">write_file</span>(content, path),</span>
-<span id="cb46-3"><a href></a>  <span class="at">name =</span> <span class="st">&quot;write_file&quot;</span>,</span>
-<span id="cb46-4"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Write text in content to a file at path&quot;</span>,</span>
-<span id="cb46-5"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb46-6"><a href></a>    <span class="at">content =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>()),</span>
-<span id="cb46-7"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb46-8"><a href></a>  )</span>
-<span id="cb46-9"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb46-2"><a href></a>  <span class="cf">function</span>(content, path) {</span>
+<span id="cb46-3"><a href></a>    readr<span class="sc">::</span><span class="fu">write_file</span>(content, path)</span>
+<span id="cb46-4"><a href></a>  },</span>
+<span id="cb46-5"><a href></a>  <span class="at">name =</span> <span class="st">&quot;write_file&quot;</span>,</span>
+<span id="cb46-6"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Write text in content to a file at path&quot;</span>,</span>
+<span id="cb46-7"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb46-8"><a href></a>    <span class="at">content =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>()),</span>
+<span id="cb46-9"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
+<span id="cb46-10"><a href></a>  )</span>
+<span id="cb46-11"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 </section>
 <section id="usage-example" class="slide level2">
 <h2>Usage example</h2>
 <div class="xxsmall">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">&quot;Examine all of the files in the current directory - of the files ending in .qmd, review their content. If they are about testthat then write a 1 paragraph summary of their content to a file call testthat_slide_summary.md.&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>( <span class="fu">paste</span>(</span>
+<span id="cb47-2"><a href></a>  <span class="st">&quot;Examine all of the files in the current directory - of the files ending in .qmd,&quot;</span>,</span>
+<span id="cb47-3"><a href></a>  <span class="st">&quot;review their content. If they are about testthat then write a 1 paragraph summary&quot;</span>,</span>
+<span id="cb47-4"><a href></a>  <span class="st">&quot;of their content to a file call testthat_slide_summary.md.&quot;</span></span>
+<span id="cb47-5"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>◯ [tool call] ls(path = &quot;.&quot;)
 ● #&gt; data
   #&gt; imgs

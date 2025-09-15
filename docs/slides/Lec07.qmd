@@ -439,7 +439,9 @@ What we have just created is a simplistic version of a MCP (Model Context Protoc
 
 ```{r}
 chat$register_tool( tool(
-  function(path) dir(path),
+  function(path) {
+    dir(path)
+  },
   name = "ls",
   description = "Lists the files in the given directory",
   arguments = list(
@@ -448,7 +450,9 @@ chat$register_tool( tool(
 ) )
 
 chat$register_tool( tool(
-  function(path) readr::read_file(path),
+  function(path) {
+    readr::read_file(path)
+  },
   name = "read_file",
   description = "Read the content of a file",
   arguments = list(
@@ -464,7 +468,9 @@ chat$register_tool( tool(
 
 ```{r}
 chat$register_tool( tool(
-  function(content, path) readr::write_file(content, path),
+  function(content, path) {
+    readr::write_file(content, path)
+  },
   name = "write_file",
   description = "Write text in content to a file at path",
   arguments = list(
@@ -481,7 +487,11 @@ chat$register_tool( tool(
 ::: {.xxsmall}
 
 ```r
-chat$chat("Examine all of the files in the current directory - of the files ending in .qmd, review their content. If they are about testthat then write a 1 paragraph summary of their content to a file call testthat_slide_summary.md.")
+chat$chat( paste(
+  "Examine all of the files in the current directory - of the files ending in .qmd,",
+  "review their content. If they are about testthat then write a 1 paragraph summary",
+  "of their content to a file call testthat_slide_summary.md."
+) )
 ```
 
 ```
