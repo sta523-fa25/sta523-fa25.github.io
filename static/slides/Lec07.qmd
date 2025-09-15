@@ -29,13 +29,7 @@ options(width=50)
 options(tibble.width = 50)
 ```
 
-# A recap of some of<br/>Hadley's points
 
-<br/> <br/>
-
-::: {.center .small}
-Watch his talk linked on the course website if you haven't already!
-:::
 
 ## DukeGPT API - Setup
 
@@ -107,6 +101,14 @@ chat$chat("Hello, who are you?")
 
 ::: {.aside}
 The DukeGPT API is running using a platform called litellm which provides an API based on OpenAI's API spec, hence why we use `chat_openai()`.
+:::
+
+# A recap of some of<br/>Hadley's points
+
+<br/> <br/>
+
+::: {.center .small}
+Watch his talk linked on the course website if you haven't already!
 :::
 
 ## LLMs are stochastic and have limitations
