@@ -1478,8 +1478,8 @@ friendliness and accessibility.</code></pre>
 </div>
 </div>
 </section>
-<section id="section-1" class="slide level2 scrollable">
-<h2></h2>
+<section id="plot-interpretation" class="slide level2 scrollable">
+<h2>Plot interpretation</h2>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href></a>d <span class="ot">=</span> datasauRus<span class="sc">::</span>datasaurus_dozen</span>
@@ -1506,38 +1506,82 @@ conventional statistical correlation.</code></pre>
 </div>
 </div>
 </section>
+<section id="data-interpretation" class="slide level2">
+<h2>Data interpretation</h2>
+<div class="xsmall">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a>dino_x <span class="ot">=</span> d[d<span class="sc">$</span>dataset <span class="sc">==</span> <span class="st">&quot;dino&quot;</span>,<span class="st">&quot;x&quot;</span>] <span class="sc">|&gt;</span> <span class="fu">paste</span>(<span class="at">collapse=</span><span class="st">&quot;,&quot;</span>)</span>
+<span id="cb32-2"><a href></a>dino_y <span class="ot">=</span> d[d<span class="sc">$</span>dataset <span class="sc">==</span> <span class="st">&quot;dino&quot;</span>,<span class="st">&quot;y&quot;</span>] <span class="sc">|&gt;</span> <span class="fu">paste</span>(<span class="at">collapse=</span><span class="st">&quot;,&quot;</span>)</span>
+<span id="cb32-3"><a href></a></span>
+<span id="cb32-4"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>( <span class="fu">interpolate</span>(</span>
+<span id="cb32-5"><a href></a>  <span class="st">&quot;Describe the any patterns in the data given the data x={{dino_x}} and y={{dino_y}}. Be Concise.&quot;</span></span>
+<span id="cb32-6"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>**Concise Pattern Summary:**
+
+- **Overall Trend:** Both x and y series appear 
+to generally decrease at first, reach a minimum 
+or plateau, then increase—suggesting a cyclical 
+or U-shaped pattern.
+- **Local Patterns:** There are local clusters 
+where values fluctuate up and down, but the 
+broader pattern is a decline followed by rising 
+values.
+- **Correlation:** There is a visible positive 
+correlation in places: when x decreases, y tends 
+to decrease; as x increases, y tends to increase,
+especially in the main portion of the data set.
+- **Extremes:** Both x and y datasets begin and 
+end with high values, and have lower values in 
+the middle.
+- **Possible Outliers:** A few points, especially
+near the end, deviate from the prevailing 
+pattern.
+- **Distribution:** The data isn’t strictly 
+monotonic, but shows grouped rises and falls, 
+with the biggest swings near the boundaries.
+
+**Summary:**  
+**The data shows a U-shaped or cyclical 
+relationship, a general positive correlation, and
+clustered increases and decreases, with highest 
+values at both ends and lows in the middle.**</code></pre>
+</div>
+</div>
+</div>
+</section>
 <section id="structured-data-extraction" class="slide level2">
 <h2>Structured data extraction</h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a>chat5 <span class="ot">=</span> <span class="fu">chat_openai</span>(</span>
-<span id="cb32-2"><a href></a>  <span class="at">base_url=</span><span class="st">&quot;https://litellm.oit.duke.edu/&quot;</span>, </span>
-<span id="cb32-3"><a href></a>  <span class="at">api_key=</span><span class="fu">Sys.getenv</span>(<span class="st">&quot;DUKEGPT_API_KEY&quot;</span>), </span>
-<span id="cb32-4"><a href></a>  <span class="at">model =</span> <span class="st">&quot;gpt-5-mini&quot;</span></span>
-<span id="cb32-5"><a href></a>)</span>
-<span id="cb32-6"><a href></a></span>
-<span id="cb32-7"><a href></a>url <span class="ot">=</span> <span class="st">&quot;https://www.daviddunson.com/_files/ugd/8f5f43_20c21592aeea4324be817b581526fbfc.pdf&quot;</span></span>
-<span id="cb32-8"><a href></a></span>
-<span id="cb32-9"><a href></a>type_award <span class="ot">=</span> <span class="fu">type_object</span>(</span>
-<span id="cb32-10"><a href></a>  <span class="st">&quot;Summary of award&quot;</span>,</span>
-<span id="cb32-11"><a href></a>  <span class="at">name =</span> <span class="fu">type_string</span>(<span class="st">&quot;Name of the award&quot;</span>),</span>
-<span id="cb32-12"><a href></a>  <span class="at">grantor =</span> <span class="fu">type_string</span>(<span class="st">&quot;Granting organization&quot;</span>),</span>
-<span id="cb32-13"><a href></a>  <span class="at">year =</span> <span class="fu">type_integer</span>(<span class="st">&quot;Year of the award (4 digit)&quot;</span>)</span>
-<span id="cb32-14"><a href></a>)</span>
-<span id="cb32-15"><a href></a></span>
-<span id="cb32-16"><a href></a>df <span class="ot">=</span> chat5<span class="sc">$</span><span class="fu">chat_structured</span>(</span>
-<span id="cb32-17"><a href></a>  <span class="st">&quot;Extract a list of the awards received by David Dunson from his attached CV&quot;</span>,</span>
-<span id="cb32-18"><a href></a>  <span class="fu">content_pdf_url</span>(url),</span>
-<span id="cb32-19"><a href></a>  <span class="at">type =</span> <span class="fu">type_array</span>(type_award)</span>
-<span id="cb32-20"><a href></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a>chat5 <span class="ot">=</span> <span class="fu">chat_openai</span>(</span>
+<span id="cb34-2"><a href></a>  <span class="at">base_url=</span><span class="st">&quot;https://litellm.oit.duke.edu/&quot;</span>, </span>
+<span id="cb34-3"><a href></a>  <span class="at">api_key=</span><span class="fu">Sys.getenv</span>(<span class="st">&quot;DUKEGPT_API_KEY&quot;</span>), </span>
+<span id="cb34-4"><a href></a>  <span class="at">model =</span> <span class="st">&quot;gpt-5-mini&quot;</span></span>
+<span id="cb34-5"><a href></a>)</span>
+<span id="cb34-6"><a href></a></span>
+<span id="cb34-7"><a href></a>url <span class="ot">=</span> <span class="st">&quot;https://www.daviddunson.com/_files/ugd/8f5f43_20c21592aeea4324be817b581526fbfc.pdf&quot;</span></span>
+<span id="cb34-8"><a href></a></span>
+<span id="cb34-9"><a href></a>type_award <span class="ot">=</span> <span class="fu">type_object</span>(</span>
+<span id="cb34-10"><a href></a>  <span class="st">&quot;Summary of award&quot;</span>,</span>
+<span id="cb34-11"><a href></a>  <span class="at">name =</span> <span class="fu">type_string</span>(<span class="st">&quot;Name of the award&quot;</span>),</span>
+<span id="cb34-12"><a href></a>  <span class="at">grantor =</span> <span class="fu">type_string</span>(<span class="st">&quot;Granting organization&quot;</span>),</span>
+<span id="cb34-13"><a href></a>  <span class="at">year =</span> <span class="fu">type_integer</span>(<span class="st">&quot;Year of the award (4 digit)&quot;</span>)</span>
+<span id="cb34-14"><a href></a>)</span>
+<span id="cb34-15"><a href></a></span>
+<span id="cb34-16"><a href></a>df <span class="ot">=</span> chat5<span class="sc">$</span><span class="fu">chat_structured</span>(</span>
+<span id="cb34-17"><a href></a>  <span class="st">&quot;Extract a list of the awards received by David Dunson from his attached CV&quot;</span>,</span>
+<span id="cb34-18"><a href></a>  <span class="fu">content_pdf_url</span>(url),</span>
+<span id="cb34-19"><a href></a>  <span class="at">type =</span> <span class="fu">type_array</span>(type_award)</span>
+<span id="cb34-20"><a href></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section>
-<section id="section-2" class="slide level2 scrollable">
+<section id="section-1" class="slide level2 scrollable">
 <h2></h2>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>knitr<span class="sc">::</span><span class="fu">kable</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href></a>knitr<span class="sc">::</span><span class="fu">kable</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
@@ -1753,22 +1797,22 @@ conventional statistical correlation.</code></pre>
 <h2>System prompts</h2>
 <div class="xsmall">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a>quiz <span class="ot">=</span> <span class="fu">chat_openai</span>(</span>
-<span id="cb34-2"><a href></a>  <span class="fu">paste</span>(</span>
-<span id="cb34-3"><a href></a>    <span class="st">&quot;You are a statistics professor helping students prepare for a quiz.&quot;</span>,</span>
-<span id="cb34-4"><a href></a>    <span class="st">&quot;The quiz will cover basic concepts on writing R packages and testing with the testthat package.&quot;</span>,</span>
-<span id="cb34-5"><a href></a>    <span class="st">&quot;Questions should be presented one at a time and you should keep track of the student&#39;s score.&quot;</span>,</span>
-<span id="cb34-6"><a href></a>    <span class="st">&quot;Questions should focus on high level concepts rather than specific syntax.&quot;</span>,</span>
-<span id="cb34-7"><a href></a>    <span class="st">&quot;After each question, wait for the student&#39;s answer before providing feedback and the next question.&quot;</span>,</span>
-<span id="cb34-8"><a href></a>    <span class="st">&quot;At the end of the quiz, provide a summary of the student&#39;s performance including the total score and areas for improvement.&quot;</span>,</span>
-<span id="cb34-9"><a href></a>    <span class="st">&quot;Questions should have short answers, no more than a few words or a sentence.&quot;</span></span>
-<span id="cb34-10"><a href></a>  ),</span>
-<span id="cb34-11"><a href></a>  <span class="at">base_url=</span><span class="st">&quot;https://litellm.oit.duke.edu/&quot;</span>, </span>
-<span id="cb34-12"><a href></a>  <span class="at">api_key=</span><span class="fu">Sys.getenv</span>(<span class="st">&quot;DUKEGPT_API_KEY&quot;</span>), </span>
-<span id="cb34-13"><a href></a>  <span class="at">model =</span> <span class="st">&quot;gpt-5-mini&quot;</span></span>
-<span id="cb34-14"><a href></a>)</span>
-<span id="cb34-15"><a href></a></span>
-<span id="cb34-16"><a href></a><span class="fu">live_browser</span>(quiz)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a>quiz <span class="ot">=</span> <span class="fu">chat_openai</span>(</span>
+<span id="cb36-2"><a href></a>  <span class="fu">paste</span>(</span>
+<span id="cb36-3"><a href></a>    <span class="st">&quot;You are a statistics professor helping students prepare for a quiz.&quot;</span>,</span>
+<span id="cb36-4"><a href></a>    <span class="st">&quot;The quiz will cover basic concepts on writing R packages and testing with the testthat package.&quot;</span>,</span>
+<span id="cb36-5"><a href></a>    <span class="st">&quot;Questions should be presented one at a time and you should keep track of the student&#39;s score.&quot;</span>,</span>
+<span id="cb36-6"><a href></a>    <span class="st">&quot;Questions should focus on high level concepts rather than specific syntax.&quot;</span>,</span>
+<span id="cb36-7"><a href></a>    <span class="st">&quot;After each question, wait for the student&#39;s answer before providing feedback and the next question.&quot;</span>,</span>
+<span id="cb36-8"><a href></a>    <span class="st">&quot;At the end of the quiz, provide a summary of the student&#39;s performance including the total score and areas for improvement.&quot;</span>,</span>
+<span id="cb36-9"><a href></a>    <span class="st">&quot;Questions should have short answers, no more than a few words or a sentence.&quot;</span></span>
+<span id="cb36-10"><a href></a>  ),</span>
+<span id="cb36-11"><a href></a>  <span class="at">base_url=</span><span class="st">&quot;https://litellm.oit.duke.edu/&quot;</span>, </span>
+<span id="cb36-12"><a href></a>  <span class="at">api_key=</span><span class="fu">Sys.getenv</span>(<span class="st">&quot;DUKEGPT_API_KEY&quot;</span>), </span>
+<span id="cb36-13"><a href></a>  <span class="at">model =</span> <span class="st">&quot;gpt-5-mini&quot;</span></span>
+<span id="cb36-14"><a href></a>)</span>
+<span id="cb36-15"><a href></a></span>
+<span id="cb36-16"><a href></a><span class="fu">live_browser</span>(quiz)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 
@@ -1784,32 +1828,32 @@ conventional statistical correlation.</code></pre>
 <div class="columns xsmall">
 <div class="column">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href></a>multiply <span class="ot">=</span> <span class="fu">tool</span>(</span>
-<span id="cb35-2"><a href></a>  <span class="cf">function</span>(x, y) {</span>
-<span id="cb35-3"><a href></a>    <span class="fu">format</span>(</span>
-<span id="cb35-4"><a href></a>      (x <span class="sc">+</span> <span class="dv">0</span>) <span class="sc">*</span> (y <span class="sc">+</span> <span class="dv">0</span>), </span>
-<span id="cb35-5"><a href></a>      <span class="at">scientific =</span> <span class="cn">FALSE</span></span>
-<span id="cb35-6"><a href></a>    )</span>
-<span id="cb35-7"><a href></a>  },</span>
-<span id="cb35-8"><a href></a>  <span class="at">name =</span> <span class="st">&quot;multiply&quot;</span>,</span>
-<span id="cb35-9"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Multiply two numbers together&quot;</span>,</span>
-<span id="cb35-10"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb35-11"><a href></a>    <span class="at">x =</span> <span class="fu">type_number</span>(),</span>
-<span id="cb35-12"><a href></a>    <span class="at">y =</span> <span class="fu">type_number</span>()</span>
-<span id="cb35-13"><a href></a>  )</span>
-<span id="cb35-14"><a href></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href></a>multiply <span class="ot">=</span> <span class="fu">tool</span>(</span>
+<span id="cb37-2"><a href></a>  <span class="cf">function</span>(x, y) {</span>
+<span id="cb37-3"><a href></a>    <span class="fu">format</span>(</span>
+<span id="cb37-4"><a href></a>      (x <span class="sc">+</span> <span class="dv">0</span>) <span class="sc">*</span> (y <span class="sc">+</span> <span class="dv">0</span>), </span>
+<span id="cb37-5"><a href></a>      <span class="at">scientific =</span> <span class="cn">FALSE</span></span>
+<span id="cb37-6"><a href></a>    )</span>
+<span id="cb37-7"><a href></a>  },</span>
+<span id="cb37-8"><a href></a>  <span class="at">name =</span> <span class="st">&quot;multiply&quot;</span>,</span>
+<span id="cb37-9"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Multiply two numbers together&quot;</span>,</span>
+<span id="cb37-10"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb37-11"><a href></a>    <span class="at">x =</span> <span class="fu">type_number</span>(),</span>
+<span id="cb37-12"><a href></a>    <span class="at">y =</span> <span class="fu">type_number</span>()</span>
+<span id="cb37-13"><a href></a>  )</span>
+<span id="cb37-14"><a href></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>(multiply)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>(multiply)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div><div class="column">
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>( <span class="fu">interpolate</span>(</span>
-<span id="cb37-2"><a href></a>  <span class="st">&quot;What is {{x}} * {{y}} in plain text?&quot;</span></span>
-<span id="cb37-3"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>( <span class="fu">interpolate</span>(</span>
+<span id="cb39-2"><a href></a>  <span class="st">&quot;What is {{x}} * {{y}} in plain text?&quot;</span></span>
+<span id="cb39-3"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>◯ [tool call] multiply(x = 123456789L, y =
 12345678L)</code></pre>
@@ -1825,7 +1869,7 @@ is 1,524,157,763,907,942.</code></pre>
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href></a><span class="fu">formatC</span>(x <span class="sc">*</span> y, <span class="at">digits =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href></a><span class="fu">formatC</span>(x <span class="sc">*</span> y, <span class="at">digits =</span> <span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot; 1524157763907942&quot;</code></pre>
 </div>
@@ -1846,43 +1890,43 @@ is 1,524,157,763,907,942.</code></pre>
 <div class="column">
 <h4 id="reading">Reading</h4>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
-<span id="cb43-2"><a href></a>  <span class="cf">function</span>(path) <span class="fu">dir</span>(path),</span>
-<span id="cb43-3"><a href></a>  <span class="at">name =</span> <span class="st">&quot;ls&quot;</span>,</span>
-<span id="cb43-4"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Lists the files in the given directory&quot;</span>,</span>
-<span id="cb43-5"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb43-6"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb43-7"><a href></a>  )</span>
-<span id="cb43-8"><a href></a>) )</span>
-<span id="cb43-9"><a href></a></span>
-<span id="cb43-10"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
-<span id="cb43-11"><a href></a>  <span class="cf">function</span>(path) readr<span class="sc">::</span><span class="fu">read_file</span>(path),</span>
-<span id="cb43-12"><a href></a>  <span class="at">name =</span> <span class="st">&quot;read_file&quot;</span>,</span>
-<span id="cb43-13"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Read the content of a file&quot;</span>,</span>
-<span id="cb43-14"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb43-15"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb43-16"><a href></a>  )</span>
-<span id="cb43-17"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
+<span id="cb45-2"><a href></a>  <span class="cf">function</span>(path) <span class="fu">dir</span>(path),</span>
+<span id="cb45-3"><a href></a>  <span class="at">name =</span> <span class="st">&quot;ls&quot;</span>,</span>
+<span id="cb45-4"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Lists the files in the given directory&quot;</span>,</span>
+<span id="cb45-5"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb45-6"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
+<span id="cb45-7"><a href></a>  )</span>
+<span id="cb45-8"><a href></a>) )</span>
+<span id="cb45-9"><a href></a></span>
+<span id="cb45-10"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
+<span id="cb45-11"><a href></a>  <span class="cf">function</span>(path) readr<span class="sc">::</span><span class="fu">read_file</span>(path),</span>
+<span id="cb45-12"><a href></a>  <span class="at">name =</span> <span class="st">&quot;read_file&quot;</span>,</span>
+<span id="cb45-13"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Read the content of a file&quot;</span>,</span>
+<span id="cb45-14"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb45-15"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
+<span id="cb45-16"><a href></a>  )</span>
+<span id="cb45-17"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column">
 <h4 id="writing">Writing</h4>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
-<span id="cb44-2"><a href></a>  <span class="cf">function</span>(content, path) readr<span class="sc">::</span><span class="fu">write_file</span>(content, path),</span>
-<span id="cb44-3"><a href></a>  <span class="at">name =</span> <span class="st">&quot;write_file&quot;</span>,</span>
-<span id="cb44-4"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Write text in content to a file at path&quot;</span>,</span>
-<span id="cb44-5"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb44-6"><a href></a>    <span class="at">content =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>()),</span>
-<span id="cb44-7"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb44-8"><a href></a>  )</span>
-<span id="cb44-9"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a>chat<span class="sc">$</span><span class="fu">register_tool</span>( <span class="fu">tool</span>(</span>
+<span id="cb46-2"><a href></a>  <span class="cf">function</span>(content, path) readr<span class="sc">::</span><span class="fu">write_file</span>(content, path),</span>
+<span id="cb46-3"><a href></a>  <span class="at">name =</span> <span class="st">&quot;write_file&quot;</span>,</span>
+<span id="cb46-4"><a href></a>  <span class="at">description =</span> <span class="st">&quot;Write text in content to a file at path&quot;</span>,</span>
+<span id="cb46-5"><a href></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
+<span id="cb46-6"><a href></a>    <span class="at">content =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>()),</span>
+<span id="cb46-7"><a href></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
+<span id="cb46-8"><a href></a>  )</span>
+<span id="cb46-9"><a href></a>) )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 </section>
 <section id="usage-example" class="slide level2">
 <h2>Usage example</h2>
 <div class="xxsmall">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">&quot;Examine all of the files in the current directory - of the files ending in .qmd, review their content. If they are about testthat then write a 1 paragraph summary of their content to a file call testthat_slide_summary.md.&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">&quot;Examine all of the files in the current directory - of the files ending in .qmd, review their content. If they are about testthat then write a 1 paragraph summary of their content to a file call testthat_slide_summary.md.&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>◯ [tool call] ls(path = &quot;.&quot;)
 ● #&gt; data
   #&gt; imgs

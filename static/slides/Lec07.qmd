@@ -264,7 +264,7 @@ chat$chat(
 ```
 :::
 
-## {.scrollable}
+## Plot interpretation {.scrollable}
 
 ::: {.xsmall}
 ```{r dino_plot}
@@ -280,6 +280,21 @@ chat$chat(
   "Describe the any patterns in the plot I've attached to this request. Be Concise.",
   content_image_plot()
 )
+```
+:::
+
+
+## Data interpretation
+
+::: {.xsmall}
+```{r dino_points}
+#| cache: true
+dino_x = d[d$dataset == "dino","x"] |> paste(collapse=",")
+dino_y = d[d$dataset == "dino","y"] |> paste(collapse=",")
+
+chat$chat( interpolate(
+  "Describe the any patterns in the data given the data x={{dino_x}} and y={{dino_y}}. Be Concise."
+) )
 ```
 :::
 
