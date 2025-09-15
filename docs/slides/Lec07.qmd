@@ -42,9 +42,6 @@ If you have not done this yet, please see the instructions here: <https://github
 
 Each model has different capabilities and different costs. Here are the current models available via the DukeGPT API:
 
-Every user can have at most 1 API key and each API key is allocated $1 / day of free usage. Additional usage requires a fund code.
-
-
 ::: {.xsmall}
 | Model                  | Company | Cloud vs. On-Prem | Input Cost (per 1M tokens) | Output Cost (per 1M tokens) |
 |-------------------------|---------|-------------------|----------------------------|-----------------------------|
@@ -63,6 +60,9 @@ Every user can have at most 1 API key and each API key is allocated $1 / day of 
 | Mistral on-site        | Mistral | on-premise        | no cost                    | no cost                     |
 
 :::
+
+At the moment, each user can have at most 1 API key and each API key is allocated $1 / day of free usage. Additional usage requires a fund code.
+
 
 
 
