@@ -1206,14 +1206,16 @@ behavior_reports
 final_grades
 ```
 
+```{r echo=FALSE}
+behavior_reports
+```
+
+:::
+::: {.column width='50%'}
+
 ```{r}
 left_join(final_grades, behavior_reports,
   by = c("name" = "person_involved"))
-```
-:::
-::: {.column width='50%'}
-```{r echo=FALSE}
-behavior_reports
 ```
 
 ```{r}
@@ -1231,14 +1233,14 @@ right_join(final_grades, behavior_reports,
 final_grades
 ```
 
-```{r}
-inner_join(final_grades, behavior_reports,
-  by = c("name" = "person_involved"))
+```{r echo=FALSE}
+behavior_reports
 ```
 :::
 ::: {.column width='50%'}
-```{r echo=FALSE}
-behavior_reports
+```{r}
+inner_join(final_grades, behavior_reports,
+  by = c("name" = "person_involved"))
 ```
 
 ```{r}
