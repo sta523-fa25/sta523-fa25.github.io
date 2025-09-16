@@ -1183,7 +1183,7 @@ Recently more advanced joins have been implemented using the `join_by()` constru
 
 ```{r}
 behavior_reports <- tibble::tribble(
-  ~incident_name,   ~person_1, ~person_2, ~person_3,
+  ~incident_name,   ~person_1,   ~person_2,     ~person_3,
   "Food fight",     "alice,bob", "carole,dave", NA,
   "'Kick me'",      "alice",     "carole",      NA,
   "Flash mob",      "bob",       "carol",       "Dave",
