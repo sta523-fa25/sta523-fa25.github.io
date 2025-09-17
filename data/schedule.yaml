@@ -116,7 +116,7 @@ schedule:
 - week: 4
   day: 2
   lecture: "Tidy data, dplyr, & tidyr"
-  slides:
+  slides: Lec08
   screencast:
   readings:
     - text: Tidy Data paper
