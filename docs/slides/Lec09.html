@@ -2841,7 +2841,7 @@ lm(formula = y ~ x, data = d)
 
 Coefficients:
 (Intercept)            x  
-    0.66376     -0.04303  </code></pre>
+     0.3410       0.5403  </code></pre>
 </div>
 </div></div>
 </div>
@@ -2869,6 +2869,18 @@ Coefficients:
 ## base::mapply            Apply a Function to Multiple List or Vector Arguments
 ## base::rapply            Recursively Apply a Function to a List
 ## base::tapply            Apply a Function Over a Ragged Array</code></pre>
+</div>
+</section>
+<section id="for-loops-vs-apply-functions" class="slide level2">
+<h2><code>for</code> loops vs <code>*apply</code> functions</h2>
+<blockquote>
+<p>Of course, someone has to write loops. It doesn’t have to be you.</p>
+<p>— Jenny Bryan</p>
+<p>From dplyr’s <a href="https://dplyr.tidyverse.org/articles/rowwise.html">Row-wise operations</a></p>
+</blockquote>
+<div class="fragment">
+<p>R’s apply functions are not any faster than <code>for</code> loops, but they are often more concise and easier to read.</p>
+<p>The chief advantage of using the apply functions is that they generally take care of the bookkeeping of collecting results and assembling them into a useful format, and doing so in a way that avoids common pitfalls (e.g. appending to an existing object).</p>
 </div>
 </section>
 <section id="lapply" class="slide level2">
@@ -3235,7 +3247,7 @@ Coefficients:
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href></a><span class="fu">map_dbl</span>(x, mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.0004747824 -0.0066478944 -0.0513247409</code></pre>
+<pre><code>[1] -0.02777509 -0.05141381  0.02961981</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href></a><span class="fu">map_chr</span>(x, mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -3245,7 +3257,7 @@ Coefficients:
   instead.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;-0.000475&quot; &quot;-0.006648&quot; &quot;-0.051325&quot;</code></pre>
+<pre><code>[1] &quot;-0.027775&quot; &quot;-0.051414&quot; &quot;0.029620&quot; </code></pre>
 </div>
 </div>
 </div><div class="column fragment" style="width:50%;">
@@ -3267,9 +3279,9 @@ Caused by error:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href></a><span class="fu">map</span>(x, mean) <span class="sc">|&gt;</span> <span class="fu">str</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 3
- $ : num -0.000475
- $ : num -0.00665
- $ : num -0.0513</code></pre>
+ $ : num -0.0278
+ $ : num -0.0514
+ $ : num 0.0296</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -3277,9 +3289,9 @@ Caused by error:
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href></a><span class="fu">lapply</span>(x, mean) <span class="sc">|&gt;</span> <span class="fu">str</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 3
- $ : num -0.000475
- $ : num -0.00665
- $ : num -0.0513</code></pre>
+ $ : num -0.0278
+ $ : num -0.0514
+ $ : num 0.0296</code></pre>
 </div>
 </div>
 </div></div>
