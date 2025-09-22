@@ -309,6 +309,10 @@ R's apply functions are not any faster than `for` loops, but they are often more
 
 The chief advantage of using the apply functions is that they generally take care of the bookkeeping of collecting results and assembling them into a useful format, and doing so in a way that avoids common pitfalls (e.g. appending to an existing object). 
 
+::; {.aside}
+Vectorization will always be much much faster than either `for` loops or `*apply` functions.
+:::
+
 
 ## lapply
 
