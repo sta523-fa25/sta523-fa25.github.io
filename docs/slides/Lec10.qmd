@@ -278,7 +278,7 @@ ggplot(
 > *add the subtitle "Dimensions for Adelie, Chinstrap, and Gentoo Penguins"*
 
 ```{r penguins-6}
-#| code-line-numbers: "13-15"
+#| code-line-numbers: "13-16"
 #| output-location: column
 #| warning: false
 ggplot(
@@ -315,7 +315,7 @@ ggplot(
 > *label the x and y axes as "Bill depth (mm)" and "Bill length (mm)", respectively*
 
 ```{r penguins-7}
-#| code-line-numbers: "16-17"
+#| code-line-numbers: "17-18"
 #| output-location: column
 #| warning: false
 ggplot(
@@ -355,7 +355,7 @@ ggplot(
 > *label the legend "Species"*
 
 ```{r penguins-8}
-#| code-line-numbers: "18"
+#| code-line-numbers: "19"
 #| output-location: column
 #| warning: false
 ggplot(
@@ -397,7 +397,7 @@ ggplot(
 > *and add a caption for the data source.*
 
 ```{r penguins-9}
-#| code-line-numbers: "19"
+#| code-line-numbers: "20"
 #| output-location: column
 #| warning: false
 ggplot(
@@ -441,7 +441,7 @@ ggplot(
 > *Finally, use the viridis color palette for all points.*
 
 ```{r penguins-10}
-#| code-line-numbers: "21"
+#| code-line-numbers: "22"
 #| output-location: column
 #| warning: false
 ggplot(
@@ -632,9 +632,7 @@ From the previous slide `color`, `shape`, and `alpha` are all **aesthetics** whi
 
 ## `labs()`
 
-In our previous example we saw the use of `labs()` to human readable labels to various plot components.
-
-We it comes to out aesthetics (data) we can annotate the data so that the label is generated automatically, by attaching a `label` argument to the appropriate column in our data frame.
+In our previous example we saw the use of `labs()` to provide human readable labels to various plot elements.
 
 ::: {.xxsmall}
 ```{r}
@@ -665,9 +663,13 @@ ggplot(
 
 ## Labels
 
+Instead of overridding with `labs()` we can instead annotate the data so that the label is generated automatically, by attaching a `label` argument to the appropriate column in our data frame.
+
+
 ::: {.xxsmall}
 ```{r}
 #| output-location: column
+#| code-line-numbers: 1-4
 
 p_labeled = penguins
 attr(p_labeled$species, "label") = "Species"
@@ -695,17 +697,14 @@ ggplot(
 ```
 :::
 
-. . .
-
-The benefit of this approach is that the labels are now part of the data frame and will be used automatically in future plots. Define once, use repeatedly.
-
 ## Dictionary
 
-Alternatively, we can provide a dictionary / lookup table to `labs()` dictionary, which will then be used.
+Alternatively, we can provide a dictionary / lookup table to `labs()` `dictionary` argument, which will then be used.
 
 ::: {.xxsmall}
 ```{r}
 #| output-location: column
+#| code-line-numbers: "1-5,24"
 
 lookup = c(
   species = "Species",
@@ -825,10 +824,11 @@ ggplot(
 
 ## Facet layout - annotation
 
-::: {.xxsmall}
+::: {.xsmall}
 ```{r facet-layout-text}
 #| out-width: 75%
 #| code-line-numbers: "8-15"
+#| output-location: slide
 ggplot(
   penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
 ) +
