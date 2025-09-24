@@ -154,7 +154,7 @@ schedule:
 
 - week: 5
   day: 2
-  lecture: "ggplot2 & Visualization Design"
+  lecture: "Visualization with ggplot2"
   slides:
   screencast:
   readings:
@@ -172,7 +172,7 @@ schedule:
 
 - week: 6
   day: 0
-  lecture: "TBD"
+  lecture: "Visualization Design"
   slides:
   screencast:
   readings:

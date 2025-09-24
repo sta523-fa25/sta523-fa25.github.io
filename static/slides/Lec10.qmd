@@ -293,9 +293,10 @@ ggplot(
   ) +
   labs(
     title = "Bill depth and length",
-    subtitle = paste("Dimensions for Adelie,",
-                     "Chinstrap, and Gentoo",
-                     "Penguins")
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins")
   ) 
 ```
 :::
@@ -329,9 +330,10 @@ ggplot(
   ) +
   labs(
     title = "Bill depth and length",
-    subtitle = paste("Dimensions for Adelie,",
-                     "Chinstrap, and Gentoo",
-                     "Penguins"),
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins"),
     x = "Bill depth (mm)",
     y = "Bill length (mm)"
   )
@@ -368,9 +370,10 @@ ggplot(
   ) +
   labs(
     title = "Bill depth and length",
-    subtitle = paste("Dimensions for Adelie,",
-                     "Chinstrap, and Gentoo",
-                     "Penguins"),
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins"),
     x = "Bill depth (mm)",
     y = "Bill length (mm)",
     color = "Species"
@@ -409,9 +412,10 @@ ggplot(
   ) +
   labs(
     title = "Bill depth and length",
-    subtitle = paste("Dimensions for Adelie,",
-                     "Chinstrap, and Gentoo",
-                     "Penguins"),
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins"),
     x = "Bill depth (mm)",
     y = "Bill length (mm)",
     color = "Species",
@@ -452,9 +456,10 @@ ggplot(
     ) +
     labs(
       title = "Bill depth and length",
-      subtitle = paste("Dimensions for Adelie,",
-                       "Chinstrap, and Gentoo",
-                       "Penguins"),
+      subtitle = paste(
+        "Dimensions for Adelie,",
+        "Chinstrap, and Gentoo",
+        "Penguins"),
       x = "Bill depth (mm)",
       y = "Bill length (mm)",
       color = "Species",
