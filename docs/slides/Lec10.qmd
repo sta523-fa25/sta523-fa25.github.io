@@ -1,8 +1,8 @@
 ---
-title: "ggplot2 ecosystem<br/>& designing visualizations"
+title: "Visualization with<br/>ggplot2"
 subtitle: "Lecture 10"
 author: "Dr. Colin Rundel"
-footer: "Sta 323 - Spring 2025"
+footer: "Sta 523 - Fall 2025"
 format:
   revealjs:
     theme: slides.scss
@@ -30,737 +30,979 @@ knitr::opts_chunk$set(
 
 library(tidyverse)
 library(palmerpenguins)
+library(bslib)
 ```
 
-# The wider ggplot2 ecosystem
+#
 
-# ggthemes
+![](imgs/hex-ggplot2.png){fig-align="center" width="40%"}
 
-## ggplot2 themes
 
-::: small
-```{r theme1}
-g = ggplot( palmerpenguins::penguins, aes(x=species, y=body_mass_g, fill=species)) + 
-    geom_boxplot()
-```
+## The Grammar of Graphics
 
-::: columns
-::: {.column width="50%"}
-```{r theme2, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g
-```
+- Visualization concept created by Leland Wilkinson (The Grammar of Graphics, 1999)
+- attempt to taxonomize the basic elements of statistical graphics
 
-```{r theme3, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + theme_dark()
-```
-:::
 
-::: {.column width="50%"}
-```{r theme4, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + theme_minimal()
-```
+- Adapted for R by Hadley Wickham (2009)
+  - consistent and compact syntax to describe statistical graphics
+  
+  - highly modular as it breaks up graphs into semantic components 
+  
+  - ggplot2 is not meant as a guide to which graph to use and how to best convey your data (more on that later), but it does have some strong opinions.
 
-```{r theme5, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + theme_void()
-```
-:::
-:::
-:::
 
-## ggthemes
+## Terminology
 
-::: {.columns .small}
-::: {.column width="50%"}
-```{r theme6, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + ggthemes::theme_economist() + 
-  ggthemes::scale_fill_economist()
-```
+A statistical graphic is a...
 
-```{r theme7, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + ggthemes::theme_fivethirtyeight() + 
-  ggthemes::scale_fill_fivethirtyeight()
-```
-:::
+- mapping of **data**
 
-::: {.column width="50%"}
-```{r theme8, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + ggthemes::theme_gdocs() +
-  ggthemes::scale_fill_gdocs()
-```
+- which may be **statistically transformed** (summarized, log-transformed, etc.)
 
-```{r theme9, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
-g + ggthemes::theme_wsj() +
-  ggthemes::scale_fill_wsj()
-```
-:::
-:::
+- to **aesthetic attributes** (color, size, xy-position, etc.)
 
-## And for those who miss Excel
+- using **geometric objects** (points, lines, bars, etc.)
 
-::: {.columns .small}
-::: {.column width="50%"}
-```{r theme10, warning=FALSE, fig.height=5, fig.width=7, out.width="100%"}
-g + ggthemes::theme_excel() +
-  ggthemes::scale_fill_excel()
-```
-:::
+- and mapped onto a specific **facet** and **coordinate system**
 
-::: {.column width="50%"}
-```{r theme11, warning=FALSE, fig.height=5, fig.width=7, out.width="100%"}
-g + ggthemes::theme_excel_new() +
-  ggthemes::scale_fill_excel_new()
-```
-:::
-:::
 
-# 
+## Anatomy of a ggplot call
 
-![](imgs/hex-ggrepel.png){fig-align="center" width="40%"}
-
-## 
-
-::: small
-```{r ggrepel1}
-d = tibble(
-  car = rownames(mtcars),
-  weight = mtcars$wt,
-  mpg = mtcars$mpg
-) |>
-  filter(weight > 2.75, weight < 3.45)
-```
-:::
-
-. . .
-
-::: {.columns .small}
-::: {.column width="50%"}
-```{r ggrepel2, out.width="65%", fig.width=5, fig.height=5}
-#| code-line-numbers: "3-5"
-ggplot(d, aes(x=weight, y=mpg)) +
-  geom_point(color="red") +
-  geom_text(
-    aes(label = car)
-  )
-```
-:::
-
-::: {.column .fragment width="50%"}
-```{r ggrepel3, out.width="65%", fig.width=5, fig.height=5}
-#| code-line-numbers: "3-5"
-ggplot(d, aes(x=weight, y=mpg)) +
-  geom_point(color="red") +
-  ggrepel::geom_text_repel(
-    aes(label = car)
-  )
-```
-:::
-:::
-
-## 
-
-::: small
-```{r ggrepel5, out.width="65%", fig.width=8, fig.height=5}
-#| code-line-numbers: "|5,6" 
-ggplot(d, aes(x=weight, y=mpg)) +
-  geom_point(color="red") +
-  ggrepel::geom_text_repel(
-    aes(label = car),
-    nudge_x = .1, box.padding = 1, point.padding = 0.6,
-    arrow = arrow(length = unit(0.02, "npc")), segment.alpha = 0.25
-  )
-```
-:::
-
-# 
-
-![](imgs/patchwork_logo.png){fig-align="center" width="40%"}
-
-## ggplot objects
-
-```{r pw_plots}
-library(patchwork)
-
-p1 = ggplot(palmerpenguins::penguins) + 
-  geom_boxplot(aes(x = island, y = body_mass_g))
-
-p2 = ggplot(palmerpenguins::penguins) + 
-  geom_boxplot(aes(x = species, y = body_mass_g))
-
-p3 = ggplot(palmerpenguins::penguins) + 
-  geom_point(aes(x = flipper_length_mm, y = body_mass_g, color = sex))
-
-p4 = ggplot(palmerpenguins::penguins) + 
-  geom_point(aes(x = bill_length_mm, y = body_mass_g, color = sex))
-```
-
-. . .
-
-```{r}
-class(p1)
-```
-
-## 
-
-```{r pw_plot1, fig.width=10, out.width="70%", warning=FALSE}
-p1 + p2 + p3 + p4
-```
-
-## 
-
-```{r pw_plot2, fig.width=10, out.width="70%", warning=FALSE}
-p1 + p2 + p3 + p4 + plot_layout(nrow=1)
-```
-
-## 
-
-```{r pw_plot3, fig.width=10, out.width="70%", warning=FALSE}
-p1 / (p2 + p3 + p4)
-```
-
-## 
-
-::: {.small}
-```{r pw_plot4, fig.width=10, out.width="70%", warning=FALSE}
-p1 + p2 + p3 + p4 + 
-  plot_annotation(title = "Palmer Penguins", tag_levels = c("A"))
-```
-:::
-
-## 
-
-::: small
-```{r pw_plot5, fig.width=10, out.width="60%", warning=FALSE}
-p1 + {
-  p2 + {
-    p3 + p4 + plot_layout(ncol = 1) + plot_layout(tag_level = 'new')
-  }
-} + 
-  plot_layout(ncol = 1) +
-  plot_annotation(tag_levels = c("1","a"), tag_prefix = "Fig ")
-```
-:::
-
-# GGally
-
-## 
-
-```{r ggally, message=FALSE, warning=FALSE, out.width="50%"}
-GGally::ggpairs(palmerpenguins::penguins)
-```
-
-# 
-
-```{r echo=FALSE, fig.align="center", out.width="45%"}
-knitr::include_graphics("imgs/hex-gganimate.png")
-```
-
-## 
-
-::: {.columns .small}
-::: {.column width="50%"}
-```{r}
-#| eval: False
-#| code-line-numbers: "|19"
-airq = airquality
-airq$Month = month.name[airq$Month]
-
+::: {.xsmall}
+```r
 ggplot(
-  airq, 
-  aes(Day, Temp, group = Month)
-) + 
-  geom_line() + 
-  geom_segment(
-    aes(xend = 31, yend = Temp), 
-    linetype = 2, 
-    colour = 'grey'
-  ) + 
-  geom_point(size = 2) + 
-  geom_text(
-    aes(x = 31.1, label = Month), 
-    hjust = 0
-  ) + 
-  gganimate::transition_reveal(Day) +
-  coord_cartesian(clip = 'off') + 
-  labs(
-    title = 'Temperature in New York', 
-    y = 'Temperature (°F)'
-  ) + 
-  theme_minimal() + 
-  theme(plot.margin = margin(5.5, 40, 5.5, 5.5))
-```
-:::
-
-::: {.column width="50%"}
-```{r}
-#| echo: False
-knitr::include_graphics("imgs/gganim_weather.gif")
-```
-:::
-:::
-
-::: aside
-[github.com/thomasp85/gganimate](https://github.com/thomasp85/gganimate)
-:::
-
-## More extensions
-
-::: {.center .large}
-[exts.ggplot2.tidyverse.org/gallery/](https://exts.ggplot2.tidyverse.org/gallery/)
-:::
-
-```{r echo=FALSE, out.width="66%"}
-knitr::include_graphics("imgs/ggplot2_exts.png")
-```
-
-# Why do we visualize?
-
-## Asncombe's Quartet
-
-```{r}
-datasets::anscombe |> as_tibble()
-```
-
-## Tidy anscombe
-
-::: medium
-```{r}
-(tidy_anscombe = datasets::anscombe |>
-  pivot_longer(everything(), names_sep = 1, names_to = c("var", "group")) |>
-  pivot_wider(id_cols = group, names_from = var, 
-              values_from = value, values_fn = list(value = list)) |> 
-  unnest(cols = c(x,y)))
-```
-:::
-
-## 
-
-::: medium
-```{r}
-tidy_anscombe |>
-  group_by(group) |>
-  summarize(
-    mean_x = mean(x), mean_y = mean(y), 
-    sd_x = sd(x), sd_y = sd(y),
-    cor = cor(x,y), .groups = "drop"
+  data = [dataframe], 
+  mapping = aes(
+    x = [var x], y = [var y], 
+    color = [var color], 
+    shape = [var shape],
+    ...
   )
-```
-:::
-
-## 
-
-```{r fig.width=7, out.width="45%"}
-ggplot(tidy_anscombe, aes(x = x, y = y, color = as.factor(group))) +
-  geom_point(size=2) +
-  facet_wrap(~group) +
-  geom_smooth(method="lm", se=FALSE, fullrange=TRUE, formula = y~x) +
-  guides(color="none")
-```
-
-## DatasauRus
-
-::: small
-```{r datasaurus}
-#| out-width: 85%
-ggplot(datasauRus::datasaurus_dozen, aes(x = x, y = y)
 ) +
-  geom_point() +
-  facet_wrap(~dataset, ncol=5)
-```
-:::
-
-::: {.aside}
-See [here](https://www.autodesk.com/research/publications/same-stats-different-graphs) for the original paper
-:::
-
-## 
-
-```{r echo=FALSE, fig.width=12, fig.height=5}
-datasauRus::datasaurus_dozen |>
-  filter(dataset %in% c("bullseye", "dino", "star")) |>
-  ggplot(
-    aes(
-      x = x, y = y, 
-      color = dataset
+  geom_[some geom](
+    mapping = aes(
+      color = [var geom color],
+      ...
     )
   ) +
-    geom_point() +
-    facet_wrap(~dataset) +
-    guides(color="none")
-```
-
-## 
-
-::: {.columns .small}
-::: {.column width="33%"}
-```{r}
-datasauRus::datasaurus_dozen
+  ... # other geometries
+  scale_[some axis]_[some scale]() +
+  facet_[some facet]([formula]) +
+  ... # other options
 ```
 :::
 
-::: {.column width="66%"}
+## Data - Palmer Penguins
+
+Measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex.
+
+:::: {.columns}
+::: {.column width='33%'}
+![](imgs/penguins.png){fig-align="center" width="100%"}
+:::
+::: {.column width='66%' .small}
 ```{r}
-datasauRus::datasaurus_dozen |>
-  group_by(dataset) |>
-  summarize(mean_x = mean(x), mean_y = mean(y), 
-            sd_x = sd(x), sd_y = sd(y), 
-            cor = cor(x,y), .groups = "drop")
-```
-:::
-:::
-
-## Simpson's Paradox
-
-```{r include=FALSE}
-datasauRus::simpsons_paradox |>
-  ggplot(aes(x=x, y=y, color=dataset)) +
-    geom_point() +
-    facet_wrap(vars(dataset))
-
-ctrs = matrix(
-  c(
-    25,15,
-    38,29,
-    48,58,
-    59,75,
-    80,83
-  ),
-  byrow=TRUE,
-  ncol=2
-)
-
-simpsons = datasauRus::simpsons_paradox |>
-  filter(dataset == "simpson_2", x < 75) |>
-  select(-dataset)
-
-simpsons = mutate(simpsons, group = kmeans(simpsons, ctrs)$cluster |> as.character()) 
+#| echo: False
+options(width = 60)
 ```
 
 ```{r}
-#| echo: False 
-simpsons |>
-  ggplot(aes(x=x, y=y)) +
-    geom_point(aes(color=1L)) +
-    geom_smooth(method="lm", se=FALSE, color="black", formula=y~x) +
-    #ggpmisc::stat_poly_line() +
-    ggpmisc::stat_poly_eq() +
-    guides(color = "none")
+library(palmerpenguins)
+penguins
 ```
 
-## Simpson's Paradox
-
-```{r echo = FALSE}
-simpsons |>
-  ggplot(aes(x=x, y=y, color=group)) +
-    geom_point() +
-    geom_smooth(method="lm", se=FALSE, formula=y~x) +
-    geom_smooth(method="lm", se=FALSE, color="black", formula=y~x) +
-    guides(color = "none")
+```{r}
+#| echo: False
+options(width = 65)
 ```
-
-# Designing effective visualizations
-
-## Gapminder
+:::
+::::
 
 
-<iframe data-src="https://www.youtube.com/embed/OwII-dwh-bk" width="100%" height="550px" style="border:1px solid;border-radius: 5px;" data-external="1">
 
-</iframe>
+
+# Text <-> Plot
+
+##
+
+::: {.xsmall}
+> *Start with the `penguins` data frame*
+
+
+```{r penguins-0}
+#| code-line-numbers: "1"
+#| output-location: column
+#| warning: false
+ggplot(data = penguins)
+```
+:::
 
 
 ##
 
-<br/><br/><br/><br/>
-
-::: {.center .xlarge}
-[gapminder.org](https://www.gapminder.org/)
-:::
-
-<br/><br/><br/><br/>
-
-::: {.center .xlarge}
-[gapminder.org/dollar-street](https://www.gapminder.org/dollar-street)
-:::
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> *map bill depth to the x-axis*
 
 
-
-
-## Keep it simple
-
-<br/>
-
-::: columns
-::: {.column width="50%"}
-```{r pie-3d, echo=FALSE, out.width="100%"}
-knitr::include_graphics("imgs/pie-3d.jpg")
+```{r penguins-1}
+#| code-line-numbers: "4"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm
+  )
+) 
 ```
 :::
 
-::: {.column width="50%"}
-<br/>
-```{r pie-to-bar, echo=FALSE, out.width="100%"}
-#| fig-width: 5
-#| fig-height: 4
 
-d <- tribble(
-  ~category,                     ~value,
-  "Cutting tools"                , 0.03,
-  "Buildings and administration" , 0.22,
-  "Labor"                        , 0.31,
-  "Machinery"                    , 0.27,
-  "Workplace materials"          , 0.17
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> *and map bill length to the y-axis.*
+
+
+```{r penguins-2}
+#| code-line-numbers: "5"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
 )
-ggplot(d, aes(x = fct_reorder(category, value), y = value)) +
-  geom_col() +
-  theme_minimal() +
-  coord_flip() +
-  labs(x = "", y = "")
 ```
 :::
-:::
 
-## Judging relative area
 
-::: aside
-From Data to Viz caveat collection - [The issue with pie chart](https://www.data-to-viz.com/caveat/pie.html)
-:::
+##
 
-```{r echo=FALSE, out.width="75%"}
-knitr::include_graphics("imgs/caveat_pie1.png")
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> *Represent each observation with a point*
+
+
+```{r penguins-3}
+#| code-line-numbers: "8"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) + 
+  geom_point()
 ```
+:::
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> *and map species to the color of each point.*
+
+```{r penguins-4}
+#| code-line-numbers: "9"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) + 
+  geom_point(
+    mapping = aes(color = species)
+  )
+```
+:::
+
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> and map species to the color of each point.
+> *Title the plot "Bill depth and length"*
+
+
+```{r penguins-5}
+#| code-line-numbers: "11"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species)
+  ) +
+  labs(title = "Bill depth and length")
+```
+:::
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> and map species to the color of each point.
+> Title the plot "Bill depth and length", 
+> *add the subtitle "Dimensions for Adelie, Chinstrap, and Gentoo Penguins"*
+
+```{r penguins-6}
+#| code-line-numbers: "13-15"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species)
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste("Dimensions for Adelie,",
+                     "Chinstrap, and Gentoo",
+                     "Penguins")
+  ) 
+```
+:::
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> and map species to the color of each point.
+> Title the plot "Bill depth and length", 
+> add the subtitle "Dimensions for Adelie, Chinstrap, and Gentoo Penguins", 
+> *label the x and y axes as "Bill depth (mm)" and "Bill length (mm)", respectively*
+
+```{r penguins-7}
+#| code-line-numbers: "16-17"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species)
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste("Dimensions for Adelie,",
+                     "Chinstrap, and Gentoo",
+                     "Penguins"),
+    x = "Bill depth (mm)",
+    y = "Bill length (mm)"
+  )
+```
+:::
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> and map species to the color of each point.
+> Title the plot "Bill depth and length", 
+> add the subtitle "Dimensions for Adelie, Chinstrap, and Gentoo Penguins", 
+> label the x and y axes as "Bill depth (mm)" and "Bill length (mm)", respectively,
+> *label the legend "Species"*
+
+```{r penguins-8}
+#| code-line-numbers: "18"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species)
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste("Dimensions for Adelie,",
+                     "Chinstrap, and Gentoo",
+                     "Penguins"),
+    x = "Bill depth (mm)",
+    y = "Bill length (mm)",
+    color = "Species"
+  ) 
+```
+:::
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> and map species to the color of each point.
+> Title the plot "Bill depth and length", 
+> add the subtitle "Dimensions for Adelie, Chinstrap, and Gentoo Penguins", 
+> label the x and y axes as "Bill depth (mm)" and "Bill length (mm)", respectively,
+> label the legend "Species", 
+> *and add a caption for the data source.*
+
+```{r penguins-9}
+#| code-line-numbers: "19"
+#| output-location: column
+#| warning: false
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species)
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste("Dimensions for Adelie,",
+                     "Chinstrap, and Gentoo",
+                     "Penguins"),
+    x = "Bill depth (mm)",
+    y = "Bill length (mm)",
+    color = "Species",
+    caption = "Source: palmerpenguins package"
+  )
+```
+:::
+
+
+##
+
+::: {.xsmall}
+> Start with the `penguins` data frame,
+> map bill depth to the x-axis
+> and map bill length to the y-axis. 
+> Represent each observation with a point
+> and map species to the color of each point.
+> Title the plot "Bill depth and length", 
+> add the subtitle "Dimensions for Adelie, Chinstrap, and Gentoo Penguins", 
+> label the x and y axes as "Bill depth (mm)" and "Bill length (mm)", respectively,
+> label the legend "Species", 
+> and add a caption for the data source.
+> *Finally, use the viridis color palette for all points.*
+
+```{r penguins-10}
+#| code-line-numbers: "21"
+#| output-location: column
+#| warning: false
+ggplot(
+    data = penguins,
+    mapping = aes(
+      x = bill_depth_mm,
+      y = bill_length_mm
+    )
+  ) +
+    geom_point(
+      mapping = aes(color = species)
+    ) +
+    labs(
+      title = "Bill depth and length",
+      subtitle = paste("Dimensions for Adelie,",
+                       "Chinstrap, and Gentoo",
+                       "Penguins"),
+      x = "Bill depth (mm)",
+      y = "Bill length (mm)",
+      color = "Species",
+      caption = "Source: palmerpenguins package"
+    ) +
+    scale_color_viridis_d()
+```
+:::
+
+
+# Aesthetics
+
+
+## Aesthetics options
+
+Commonly used characteristics of plotting geometries that can be **mapped to a specific variable** in the data, examples include:
+
+- position (`x`, `y`)
+- `color`
+- `shape`
+- `size`
+- `alpha` (transparency)
+
+Different geometries have different aesthetics available - see the [ggplot2 geoms](https://ggplot2.tidyverse.org/reference/index.html#Geoms) help files for listings.
+
+
+* Aesthetics given in `ggplot()` apply to all `geom`s.
+
+* Aesthetics for a specific `geom_*()` can be overridden via `mapping` or as an argument.
+
+
+## color
+
+::: {.xsmall}
+```{r color}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(
+    aes(color = species)
+  )
+```
+:::
+
+
+## Stop the warning
+
+::: {.xsmall}
+```{r color_narm}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(
+    aes(color = species), na.rm=TRUE
+  )
+```
+:::
+
+
+## Shape
+
+Mapped to a different variable than `color`
+
+::: {.xsmall}
+```{r shape-island}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) +
+  geom_point(
+    aes(color = species, shape = island), na.rm = TRUE
+  )
+```
+:::
+
+
+
+## Shape
+
+Mapped to same variable as `color`
+
+::: {.xsmall}
+```{r shape-species}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) +
+  geom_point(
+    aes(color = species, shape = species), na.rm = TRUE
+  )
+```
+:::
+
+
+
+## Size
+
+Using a fixed value - note that this value is outside of the `aes` call
+
+::: {.xsmall}
+```{r size1}
+#| out-width: 66%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) +
+  geom_point(
+    aes(color = species, shape = species), na.rm = TRUE,
+    size = 3
+  )
+```
+:::
+
+
+
+## Size
+
+Mapped to a variable
+
+::: {.xsmall}
+```{r size2}
+#| out-width: 66%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) +
+  geom_point(
+    aes(color = species, shape = species, size = body_mass_g), na.rm = TRUE
+  )
+```
+:::
+
+
+
+## Alpha
+
+::: {.xsmall}
+```{r alpha}
+#| out-width: 75%
+ggplot(
+  penguins,
+  aes(x = bill_depth_mm, y = bill_length_mm)
+) +
+  geom_point(
+    aes(color = species, shape = species, alpha = body_mass_g), na.rm = TRUE,
+    size = 3
+  )
+```
+:::
+
+
+
+## Mapping vs settings
+
+- **Mapping** - Determine an aesthetic (the size, alpha, etc.) of a geom based on the values of a variable in the data
+  - wrapped by `aes()` and pass as `mapping` argument to `ggplot()` or `geom_*()`.
+
+<br/>
+
+- **Setting** - Determine an aesthetic (the size, alpha, etc.) of a geom using a constant value not directly from the data.
+  - passed directly into `geom_*()` as an argument.
 
 . . .
 
-```{r echo=FALSE, out.width="75%"}
-knitr::include_graphics("imgs/caveat_pie2.png")
-```
-
-## Use color to draw attention
-
-<br/> <br/>
-
-::: columns
-::: {.column width="50%"}
-```{r echo=FALSE, out.width="100%"}
-#| fig-width: 5
-#| fig-height: 4
-
-d |>
-  mutate(category = str_replace(category, " ", "\n")) |>
-  ggplot(aes(x = category, y = value, fill = category)) +
-    geom_col() +
-    theme_minimal() +
-    labs(x = "", y = "") +
-    theme(legend.position = "none")
-```
-:::
-
-::: {.column width="50%"}
-```{r echo=FALSE, out.width="100%"}
-#| fig-width: 5
-#| fig-height: 4
-
-ggplot(d, aes(x = fct_reorder(category, value), y = value, fill = category)) +
-  geom_col() +
-  theme_minimal() +
-  coord_flip() +
-  labs(x = "", y = "") +
-  scale_fill_manual(values = c("red", rep("gray", 4))) +
-  theme(legend.position = "none")
-```
-:::
-:::
-
-## Tell a story
-
 <br/>
 
-::: columns
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="98%"}
-knitr::include_graphics("imgs/time-series-story-1.png")
+From the previous slide `color`, `shape`, and `alpha` are all **aesthetics** while `size` was a **setting**.
+
+# Labels
+
+## `labs()`
+
+In our previous example we saw the use of `labs()` to human readable labels to various plot components.
+
+We it comes to out aesthetics (data) we can annotate the data so that the label is generated automatically, by attaching a `label` argument to the appropriate column in our data frame.
+
+::: {.xxsmall}
+```{r}
+#| output-location: column
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species), na.rm = TRUE
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins"),
+    x = "Bill depth (mm)",
+    y = "Bill length (mm)",
+    color = "Species",
+    caption = "Source: palmerpenguins package"
+  )
 ```
 :::
 
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="100%"}
-knitr::include_graphics("imgs/time-series-story-2.png")
-```
-:::
-:::
+## Labels
 
-::: aside
-*Credit*: Angela Zoss and Eric Monson, Duke DVS
-:::
+::: {.xxsmall}
+```{r}
+#| output-location: column
 
-## Leave out non-story details
+p_labeled = penguins
+attr(p_labeled$species, "label") = "Species"
+attr(p_labeled$bill_depth_mm, "label") = "Bill depth (mm)"
+attr(p_labeled$bill_length_mm, "label") = "Bill length (mm)"
 
-<br/> <br/>
-
-::: columns
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="100%"}
-knitr::include_graphics("imgs/vis_inj1.png")
-```
-:::
-
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="96%"}
-knitr::include_graphics("imgs/vis_inj2.png")
-```
-:::
-:::
-
-::: aside
-*Credit*: Angela Zoss and Eric Monson, Duke DVS
-:::
-
-## Ordering matter
-
-::: columns
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="80%"}
-knitr::include_graphics("imgs/vis_order1.png")
+ggplot(
+  data = p_labeled,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species), na.rm = TRUE
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins"),
+    caption = "Source: palmerpenguins package"
+  )
 ```
 :::
 
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="80%"}
-knitr::include_graphics("imgs/vis_order2.png")
-```
-:::
-:::
+. . .
 
-::: aside
-*Credit*: Angela Zoss and Eric Monson, Duke DVS
-:::
+The benefit of this approach is that the labels are now part of the data frame and will be used automatically in future plots. Define once, use repeatedly.
 
-## Clearly indicate missing data
+## Dictionary
 
-<br/>
+Alternatively, we can provide a dictionary / lookup table to `labs()` dictionary, which will then be used.
 
-```{r echo=FALSE, fig.align="center", out.width="100%"}
-knitr::include_graphics("imgs/vis_missing.png")
-```
+::: {.xxsmall}
+```{r}
+#| output-location: column
 
-::: aside
-http://ivi.sagepub.com/content/10/4/271, Angela Zoss and Eric Monson, Duke DVS
-:::
+lookup = c(
+  species = "Species",
+  bill_depth_mm = "Bill depth {mm}",
+  bill_length_mm = "Bill length {mm}"
+)
 
-## Reduce cognitive load
-
-<br/>
-
-```{r echo=FALSE, fig.align="center", out.width="100%"}
-knitr::include_graphics("imgs/vis_text.png")
-```
-
-::: aside
-http://www.storytellingwithdata.com/2012/09/some-finer-points-of-data-visualization.html
-:::
-
-## Use descriptive titles
-
-::: columns
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="80%"}
-knitr::include_graphics("imgs/vis-title-1.png")
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_depth_mm,
+    y = bill_length_mm
+  )
+) +
+  geom_point(
+    mapping = aes(color = species), na.rm = TRUE
+  ) +
+  labs(
+    title = "Bill depth and length",
+    subtitle = paste(
+      "Dimensions for Adelie,",
+      "Chinstrap, and Gentoo",
+      "Penguins"),
+    caption = "Source: palmerpenguins package",
+    dictionary = lookup
+  )
 ```
 :::
 
-::: {.column width="50%"}
-```{r echo=FALSE, fig.align="center", out.width="80%"}
-knitr::include_graphics("imgs/vis-title-2.png")
+# Faceting
+
+
+## Faceting
+
+- Smaller plots that display different subsets of the data
+
+- Useful for exploring conditional relationships and large data
+
+- Sometimes referred to as "small multiples"
+
+
+## facet_grid
+
+::: {.xsmall}
+```{r facet}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_grid(
+    species ~ island
+  )  
 ```
 :::
+
+
+## Compare with ...
+
+::: {.xsmall}
+```{r facet_comp}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(
+    aes(color = species, shape = island), na.rm = TRUE, size = 3
+  )
+```
 :::
 
-::: aside
-*Credit*: Angela Zoss and Eric Monson, Duke DVS
+## Faceting and color
+
+::: {.xsmall}
+```{r facet-color-legend}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
+) +
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ island)
+```
 :::
 
-## Annotate figures
 
-<br/>
+## Hiding legend elements
 
-```{r echo=FALSE, fig.align="center", out.width="80%"}
-knitr::include_graphics("imgs/vis_annotate.png")
+::: {.xsmall}
+```{r facet-color-no-legend}
+#| out-width: 75%
+#| code-line-numbers: "6"
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
+) +
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ island) +
+  guides(color = "none")
+```
+:::
+
+
+## Facet layout - context
+
+::: {.xsmall}
+```{r facet-layout-context}
+#| out-width: 75%
+#| code-line-numbers: "4"
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
+) +
+  geom_point(color = "grey", alpha = 0.5, na.rm = TRUE, layout = "fixed") +
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ island) +
+  guides(color = "none")
+```
+:::
+
+## Facet layout - annotation
+
+::: {.xxsmall}
+```{r facet-layout-text}
+#| out-width: 75%
+#| code-line-numbers: "8-15"
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
+) +
+  geom_point(color = "grey", alpha = 0.5, na.rm = TRUE, layout = "fixed") +
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ island) +
+  guides(color = "none") +
+  geom_text(
+    x = 17.5, y = 35, label = "Only sampled on Dream", size = 6, color = "black", 
+    layout = 5
+  ) +
+  geom_text(
+    x = 17.5, y = 35, label = "Only sampled on Biscoe", size = 6, color = "black", 
+    layout = 7
+  )
+```
+:::
+
+## Facet axes
+
+::: {.xsmall}
+```{r facet-axes}
+#| out-width: 75%
+#| code-line-numbers: "6"
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
+) +
+  geom_point(color = "grey", alpha = 0.5, na.rm = TRUE, layout = "fixed") +
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ island, axes = "all") +
+  guides(color = "none")
+```
+:::
+
+## Facet axes - labels
+
+::: {.xsmall}
+```{r facet-axes-labels}
+#| out-width: 75%
+#| #| code-line-numbers: "6"
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)
+) +
+  geom_point(color = "grey", alpha = 0.5, na.rm = TRUE, layout = "fixed") +
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ island, axes = "all", axis.labels = "margins") +
+  guides(color = "none")
+```
+:::
+
+## facet_grid (columns)
+
+::: {.xsmall}
+```{r facet2}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_grid(~ species)  
+```
+:::
+
+
+## facet_grid (rows)
+
+::: {.xsmall}
+```{r facet3}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_grid(species ~ .)  
+```
+:::
+
+
+## facet_wrap
+
+::: {.xsmall}
+```{r facetwrap}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_wrap(~ species)
+```
+:::
+
+
+
+## facet_wrap
+
+::: {.xsmall}
+```{r facetwrap2}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_wrap(~ species, ncol = 2)
+```
+:::
+
+
+## facet_wrap - direction
+
+::: {.xsmall}
+```{r facetwrap2-dir}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_wrap(~ species, ncol = 2, dir = "br")
+```
+:::
+
+## facet_wrap - direction
+
+::: {.xsmall}
+```{r facetwrap2-dir2}
+#| out-width: 75%
+ggplot(
+  penguins, aes(x = bill_depth_mm, y = bill_length_mm)
+) + 
+  geom_point(na.rm = TRUE) +
+  facet_wrap(~ species, ncol = 2, dir = "rb")
+```
+:::
+
+# Learning more
+
+## geom tour
+
+::: {.large .center}
+[ggplot2.tidyverse.org/reference/index.html](https://ggplot2.tidyverse.org/reference/index.html)
+:::
+
+
+<iframe data-src="https://ggplot2.tidyverse.org/reference/index.html" width="100%" height="500px" style="border:1px solid;border-radius: 5px;" data-external="1">
+</iframe>
+
+# Exercises
+
+## Exercise 1
+
+Recreate, as faithfully as possible, the following plot using ggplot2 and the `penguins` data.
+
+```{r echo = FALSE, out.width = "60%", fig.height = 5}
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(
+    aes(
+      x = body_mass_g,
+      fill = species
+    ) 
+  ) +
+  geom_density(alpha = 0.5, color = NA) +
+  facet_wrap(~sex, nrow = 2) + 
+  labs(
+    x = "Body Mass (g)",
+    y = "",
+    fill = "Species"
+  )
 ```
 
-::: aside
-https://bl.ocks.org/susielu/23dc3082669ee026c552b85081d90976
-:::
 
-## All of the data doesn't tell a story
 
-```{r echo=FALSE, fig.align="center", out.width="60%"}
-knitr::include_graphics("imgs/vis_nyt1.png")
+## Exercise 2
+
+Recreate, as faithfully as possible, the following plot from the `palmerpenguin` package README in ggplot2.
+
+```{r echo = FALSE, out.width="55%"}
+knitr::include_graphics("imgs/palmer_plot_ex2.png")
 ```
 
-::: aside
-[nytimes.com/interactive/2014/06/05/upshot/how-the-recession-reshaped-the-economy-in-255-charts.html](http://www.nytimes.com/interactive/2014/06/05/upshot/how-the-recession-reshaped-the-economy-in-255-charts.html)
+::: {.aside}
+See the `palmerpenguins` pkgdown [site](https://allisonhorst.github.io/palmerpenguins/)
 :::
-
-## All of the data doesn't tell a story
-
-```{r echo=FALSE, fig.align="center", out.width="60%"}
-knitr::include_graphics("imgs/vis_nyt2.png")
-```
-
-::: aside
-[nytimes.com/interactive/2014/06/05/upshot/how-the-recession-reshaped-the-economy-in-255-charts.html](http://www.nytimes.com/interactive/2014/06/05/upshot/how-the-recession-reshaped-the-economy-in-255-charts.html)
-:::
-
-## All of the data doesn't tell a story
-
-```{r echo=FALSE, fig.align="center", out.width="60%"}
-knitr::include_graphics("imgs/vis_nyt3.png")
-```
-
-::: aside
-[nytimes.com/interactive/2014/06/05/upshot/how-the-recession-reshaped-the-economy-in-255-charts.html](http://www.nytimes.com/interactive/2014/06/05/upshot/how-the-recession-reshaped-the-economy-in-255-charts.html)
-:::
-
-# Chart Remakes / Makeovers
-
-## The Why Axis - Gender Gap
-
-```{r echo=FALSE, fig.align="center", out.width="45%"}
-knitr::include_graphics("imgs/vis_gap.jpg")
-```
-
-::: aside
-[thewhyaxis.info/gap-remake/](https://web.archive.org/web/20220121073030/thewhyaxis.info/gap-remake/)
-:::
-
-## The Why Axis - BLS
-
-```{r echo=FALSE, fig.align="center", out.width="60%"}
-knitr::include_graphics("imgs/vis_bls.gif")
-```
-
-::: aside
-[thewhyaxis.info/defaults/](https://web.archive.org/web/20210805020658/thewhyaxis.info/defaults/)
-:::
-
-## Other Resources
-
--   Duke Library - Center for Data and Visualization Sciences - https://library.duke.edu/data/
-
--   Tidy tuesday - https://github.com/rfordatascience/tidytuesday
-
--   Twitter / Bluesky / Mastodon - #dataviz, #tidytuesday
-
--   Books:
-
-    -   Wickham, Navarro, Pedersen. *ggplot2: Elegant Graphics for Data Analysis*. 3rd edition. Springer, 2021.
-    -   Wilke. *Fundamentals of Data Visualization*. O'Reilly Media, 2019.
-    -   Healy. *Data Visualization: A Practical Introduction*. Princeton University Press, 2018.
-    -   Tufte. *The visual display of quantitative information*. 2nd edition. Connecticut Graphics Press, 2015.
-
-## Acknowledgments
-
-Above materials are derived in part from the following sources:
-
-- sVisualization training materials originally developed by Angela Zoss and Eric Monson
-
-- [Duke Center for Data and Visualization Sciences](https://library.duke.edu/data)
