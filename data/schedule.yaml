@@ -173,7 +173,7 @@ schedule:
 - week: 6
   day: 0
   lecture: "Visualization Design"
-  slides:
+  slides: Lec11
   screencast:
   readings:
   suppmat:
