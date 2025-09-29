@@ -41,13 +41,14 @@ library(marquee)
 
 ## ggplot2 themes
 
-::: small
+::: {.small}
 ```{r theme1}
 g = ggplot( palmerpenguins::penguins, aes(x=species, y=body_mass_g, fill=species)) + 
     geom_boxplot()
 ```
+:::
 
-::: columns
+::: {.columns .small}
 ::: {.column width="50%"}
 ```{r theme2, warning=FALSE, fig.height=5, fig.width=7, out.width="50%"}
 g
@@ -68,7 +69,7 @@ g + theme_void()
 ```
 :::
 :::
-:::
+
 
 ## ggthemes
 
@@ -256,7 +257,9 @@ p1 + {
 #| message: false
 #| cache: true
 #| warning: false
-#| out-width: "50%"
+#| out-width: "75%"
+#| fig-width: 10
+#| fig-height: 8
 
 GGally::ggpairs(palmerpenguins::penguins)
 ```
@@ -314,6 +317,17 @@ knitr::include_graphics("imgs/gganim_weather.gif")
 [github.com/thomasp85/gganimate](https://github.com/thomasp85/gganimate)
 :::
 
+## Some other notable packages
+
+* [`marquee`](https://marquee.r-lib.org/) - add rendered markdown to your plots
+
+* [`thematic`](https://rstudio.github.io/thematic/) & [`brand.yml`](https://posit-dev.github.io/brand-yml/) - automatic theming of plots to match your app / site
+
+* [`ggridges`](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html) - creates ridgeline plots (stacked density plots)
+
+* [`ggdist`](https://mjskay.github.io/ggdist/) - visualizations and utilities for distributions and uncertainty (think bayesian model output)
+
+* [`legendary`](https://teunbrand.github.io/legendry/) - adds addition guides (legends) to ggplot2
 
 ## More extensions
 
@@ -334,7 +348,7 @@ datasets::anscombe |> as_tibble()
 
 ## Tidy anscombe
 
-::: medium
+::: {.small}
 ```{r}
 (tidy_anscombe = datasets::anscombe |>
   pivot_longer(everything(), names_sep = 1, names_to = c("var", "group")) |>
@@ -360,21 +374,23 @@ tidy_anscombe |>
 
 ## 
 
-```{r fig.width=7, out.width="45%"}
+::: {.medium}
+```{r}
+#| out-width: 75%
 ggplot(tidy_anscombe, aes(x = x, y = y, color = as.factor(group))) +
   geom_point(size=2) +
   facet_wrap(~group) +
   geom_smooth(method="lm", se=FALSE, fullrange=TRUE, formula = y~x) +
   guides(color="none")
 ```
+:::
 
 ## DatasauRus
 
 ::: small
 ```{r datasaurus}
 #| out-width: 85%
-ggplot(datasauRus::datasaurus_dozen, aes(x = x, y = y)
-) +
+ggplot(datasauRus::datasaurus_dozen, aes(x = x, y = y)) +
   geom_point() +
   facet_wrap(~dataset, ncol=5)
 ```
@@ -386,7 +402,10 @@ See [here](https://www.autodesk.com/research/publications/same-stats-different-g
 
 ## 
 
-```{r echo=FALSE, fig.width=12, fig.height=5}
+```{r}
+#| echo: false
+#| fig-width: 12
+#| fig-height: 6
 datasauRus::datasaurus_dozen |>
   filter(dataset %in% c("bullseye", "dino", "star")) |>
   ggplot(
@@ -447,18 +466,29 @@ simpsons = datasauRus::simpsons_paradox |>
 simpsons = mutate(simpsons, group = kmeans(simpsons, ctrs)$cluster |> as.character()) 
 ```
 
+
+::: {.small}
 ```{r}
-#| echo: False 
+lm(y~x, data=simpsons) |>
+  summary()
+```
+:::
+
+## Simpson's Paradox Visually
+
+```{r}
+#| echo: false 
+#| message: false
 simpsons |>
   ggplot(aes(x=x, y=y)) +
     geom_point(aes(color=1L)) +
     geom_smooth(method="lm", se=FALSE, color="black", formula=y~x) +
     #ggpmisc::stat_poly_line() +
-    ggpmisc::stat_poly_eq() +
+    ggpmisc::stat_poly_eq(size=9) +
     guides(color = "none")
 ```
 
-## Simpson's Paradox
+## Simpson's Paradox with groups
 
 ```{r echo = FALSE}
 simpsons |>
@@ -468,6 +498,15 @@ simpsons |>
     geom_smooth(method="lm", se=FALSE, color="black", formula=y~x) +
     guides(color = "none")
 ```
+
+## Revised model
+
+::: {.small}
+```{r}
+lm(y~x*group-1, data=simpsons) |>
+  summary()
+```
+:::
 
 # Designing effective visualizations
 
