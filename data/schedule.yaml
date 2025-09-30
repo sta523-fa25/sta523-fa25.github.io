@@ -181,7 +181,7 @@ schedule:
 - week: 6
   day: 2
   lecture: "Text processing & Regular expressions"
-  slides:
+  slides: Lec12
   screencast:
   readings:
     - text: stringr Cheat Sheet,
