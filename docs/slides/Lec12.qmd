@@ -35,7 +35,7 @@ library(tidyverse)
 
 ## Base R string functions
 
-As you have likely noticed, the individual characters in a string (element of a character vector) cannot be directly accessed. Base R provides a number helpful functions for pattern matching and manipulation of these strings:
+As you have likely noticed, the individual characters in a string (element of a character vector) cannot be directly accessed. Base R provides a number helpful functions for pattern matching and manipulation of these objects:
 
 - `paste()`, `paste0()` - concatenate strings
 - `substr()`, `substring()` - extract or replace substrings
@@ -45,7 +45,7 @@ As you have likely noticed, the individual characters in a string (element of a 
 - `grep()`, `grepl()` - regular expression pattern matching
 - `sub()`, `gsub()` - regular expression pattern replacement
 
-- `+` many more - the *See Also* section of the the above functions' documentation to find additional functions.
+`+` many more - the *See Also* section of the the above functions' documentation to find additional functions.
 
 ##
 
