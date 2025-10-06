@@ -308,7 +308,7 @@ html |> html_text2() |> cat(sep="\n")
 ## html tables
 
 :::: {.columns .xsmall}
-::: {.column width='50%'}
+::: {.column width='65%'}
 ```{r}
 html_table = 
 '<html>
@@ -327,7 +327,7 @@ html_table =
 ```
 :::
 
-::: {.column width='50%'}
+::: {.column width='35%'}
 ```{r}
 read_html(html_table) |>
   html_elements("table") |> 
