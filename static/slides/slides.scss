@@ -115,3 +115,8 @@ blockquote > p {
   text-wrap-mode: nowrap !important;
   max-height: 520px !important;
 }
+
+.reveal section.center-image img {
+  width: 45% !important;
+  height: auto !important;
+}
