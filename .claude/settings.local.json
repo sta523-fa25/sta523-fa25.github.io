@@ -3,7 +3,9 @@
   "permissions": {
     "allow": [
       "Bash(grep:*)",
-      "Bash(hugo:*)"
+      "Bash(hugo:*)",
+      "Bash(cp:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }

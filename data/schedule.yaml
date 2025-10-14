@@ -227,13 +227,15 @@ schedule:
 - week: 8
   day: 2
   lecture: "make"
-  slides:
+  slides: Lec15
   screencast:
   readings:
     - text: Minimal make
       link: https://kbroman.org/minimal_make/
     - text: Why use make
       link: https://bost.ocks.org/mike/make/
+    - text: targets
+      link: https://books.ropensci.org/targets/
   suppmat:
 
 - week: 9
