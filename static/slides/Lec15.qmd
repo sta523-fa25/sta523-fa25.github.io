@@ -256,8 +256,6 @@ The [`targets`](https://docs.ropensci.org/targets/) package provides a modern R-
 
 ::: {.small}
 ```r
-install.packages("targets")
-
 # Create a new targets project
 use_targets()
 
