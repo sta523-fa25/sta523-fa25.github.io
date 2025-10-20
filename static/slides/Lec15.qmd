@@ -1,6 +1,6 @@
 ---
 title: "make"
-subtitle: "Lecture 16"
+subtitle: "Lecture 15"
 author: "Dr. Colin Rundel"
 footer: "Sta 523 - Fall 2025"
 format:
