@@ -198,7 +198,10 @@ GitHub uses page-based and link header pagination:
     - `last` - last page
 
 
-# httr2
+# {.center-image}
+
+![](imgs/hex_httr2.png){fig-align="center"}
+
 
 ## Background
 
