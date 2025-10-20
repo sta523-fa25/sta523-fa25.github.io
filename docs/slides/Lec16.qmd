@@ -320,3 +320,42 @@ Some useful functions:
 # Demo 2 - httr2 + GitHub
 
 
+## Authentication
+
+Most APIs have rate limits and access restrictions:
+
+* Unauthenticated requestss - limited rate limits, restricted access
+* Authenticated requests - higher rate limits, access to private resources
+
+GitHub API rate limits (per hour):
+
+* Unauthenticated: 60 requests
+* Authenticated: 5,000 requests (personal access token)
+
+Authentication is done via HTTP headers, typically:
+
+* `Authorization: Bearer <token>`
+
+::: aside
+Here `Authorization` is the request header and `Bearer <token>` is the value. With `httr2` `req_auth_bearer_token()` can be used to add this header.
+:::
+
+
+## GitHub Personal Access Tokens (PATs)
+
+A PAT is a secure alternative to using passwords for API authentication:
+
+* Generated on GitHub: Settings → Developer settings → Personal access tokens
+* Choose scopes (permissions) carefully - only grant what's needed
+* Two types:
+    - Fine-grained tokens - repository-specific access (recommended)
+    - Classic tokens - broader access patterns
+
+Best practices:
+
+* Never commit tokens to git repositories
+* Store in environment variables (e.g., `.Renviron`)
+* Use packages like `gitcreds` or `credentials` to manage tokens securely
+* Set expiration dates and rotate tokens regularly
+
+

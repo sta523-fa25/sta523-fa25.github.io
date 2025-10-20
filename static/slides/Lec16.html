@@ -1384,10 +1384,52 @@ Dr. Colin Rundel
 <li><p><code>resp_headers()</code> - extract response headers</p></li>
 </ul>
 </section></section>
+<section>
 <section id="demo-2---httr2-github" class="title-slide slide level1 center">
 <h1>Demo 2 - httr2 + GitHub</h1>
 
 </section>
+<section id="authentication" class="slide level2">
+<h2>Authentication</h2>
+<p>Most APIs have rate limits and access restrictions:</p>
+<ul>
+<li>Unauthenticated requestss - limited rate limits, restricted access</li>
+<li>Authenticated requests - higher rate limits, access to private resources</li>
+</ul>
+<p>GitHub API rate limits (per hour):</p>
+<ul>
+<li>Unauthenticated: 60 requests</li>
+<li>Authenticated: 5,000 requests (personal access token)</li>
+</ul>
+<p>Authentication is done via HTTP headers, typically:</p>
+<ul>
+<li><code>Authorization: Bearer &lt;token&gt;</code></li>
+</ul>
+
+<aside><div>
+<p>Here <code>Authorization</code> is the request header and <code>Bearer &lt;token&gt;</code> is the value. With <code>httr2</code> <code>req_auth_bearer_token()</code> can be used to add this header.</p>
+</div></aside></section>
+<section id="github-personal-access-tokens-pats" class="slide level2">
+<h2>GitHub Personal Access Tokens (PATs)</h2>
+<p>A PAT is a secure alternative to using passwords for API authentication:</p>
+<ul>
+<li>Generated on GitHub: Settings → Developer settings → Personal access tokens</li>
+<li>Choose scopes (permissions) carefully - only grant what’s needed</li>
+<li>Two types:
+<ul>
+<li>Fine-grained tokens - repository-specific access (recommended)</li>
+<li>Classic tokens - broader access patterns</li>
+</ul></li>
+</ul>
+<p>Best practices:</p>
+<ul>
+<li>Never commit tokens to git repositories</li>
+<li>Store in environment variables (e.g., <code>.Renviron</code>)</li>
+<li>Use packages like <code>gitcreds</code> or <code>credentials</code> to manage tokens securely</li>
+<li>Set expiration dates and rotate tokens regularly</li>
+</ul>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
