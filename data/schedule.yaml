@@ -267,6 +267,8 @@ schedule:
       link: http://shiny.rstudio.com/gallery/widget-gallery.html
     - text: Mastering Shiny
       link: https://mastering-shiny.org/
+    - text: posit conf 2025 - shiny workshop
+      link: https://posit-conf-2025.github.io/shiny-r/
   suppmat:
 
 - week: 10
