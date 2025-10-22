@@ -257,18 +257,6 @@ schedule:
 
 - week: 9
   day: 2
-  lecture: "Building APIs with R (plumber)"
-  slides:
-  screencast:
-  readings:
-    - text: plumber documentation
-      link: https://www.rplumber.io/index.html
-    - text: plumber webinar
-      link: https://posit.co/resources/videos/expanding-r-horizons-integrating-r-with-plumber-apis/
-
-
-- week: 10
-  day: 0
   lecture: "Shiny"
   slides:
   screencast:
@@ -282,14 +270,6 @@ schedule:
   suppmat:
 
 - week: 10
-  day: 2
-  lecture: "Dynamic UIs & Shiny Modules"
-  slides:
-  screencast:
-  readings:
-
-
-- week: 11
   day: 0
   lecture: "Databases & dplyr"
   slides:
@@ -305,7 +285,7 @@ schedule:
     - text: Python sqlite3 — DB-API
       link: https://docs.python.org/3/library/sqlite3.html
 
-- week: 11
+- week: 10
   day: 2
   lecture: "DuckDB & SQL"
   slides:
@@ -317,9 +297,16 @@ schedule:
       link: https://gist.github.com/mattmc3/38a85e6a4ca1093816c08d4815fbebfb
   suppmat:
 
-
-- week: 12
+- week: 11
   day: 0
+  lecture: "Dynamic UIs & Shiny Modules"
+  slides:
+  screencast:
+  readings:
+
+
+- week: 11
+  day: 2
   lecture: "Profiling & Parallelization"
   slides:
   screencast:
@@ -329,6 +316,18 @@ schedule:
     - text: "furrr"
       link: https://furrr.futureverse.org/
   suppmat:
+
+- week: 12
+  day: 0
+  lecture: "Building APIs with R (plumber)"
+  slides:
+  screencast:
+  readings:
+    - text: plumber documentation
+      link: https://www.rplumber.io/index.html
+    - text: plumber webinar
+      link: https://posit.co/resources/videos/expanding-r-horizons-integrating-r-with-plumber-apis/
+
 
 - week: 12
   day: 2
