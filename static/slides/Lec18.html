@@ -1267,7 +1267,7 @@ Dr. Colin Rundel
   ..@ loadable.extensions: logi TRUE
   ..@ flags              : int 70
   ..@ vfs                : chr &quot;&quot;
-  ..@ ref                :&lt;environment: 0x1177b1ec8&gt; 
+  ..@ ref                :&lt;environment: 0x1156a6470&gt; 
   ..@ bigint             : chr &quot;integer64&quot;
   ..@ extended_types     : logi FALSE</code></pre>
 </div>
@@ -1569,7 +1569,7 @@ Dr. Colin Rundel
   .. .. ..@ loadable.extensions: logi TRUE
   .. .. ..@ flags              : int 70
   .. .. ..@ vfs                : chr &quot;&quot;
-  .. .. ..@ ref                :&lt;environment: 0x117ff1120&gt; 
+  .. .. ..@ ref                :&lt;environment: 0x116b81d98&gt; 
   .. .. ..@ bigint             : chr &quot;integer64&quot;
   .. .. ..@ extended_types     : logi FALSE
   ..$ disco: NULL
@@ -1704,7 +1704,7 @@ Dr. Colin Rundel
 <span id="cb56-5"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.013   0.000   0.013 </code></pre>
+  0.012   0.000   0.012 </code></pre>
 </div>
 </div>
 </div></div>
@@ -1719,14 +1719,14 @@ Dr. Colin Rundel
 <span id="cb58-5"><a href></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.031   0.004   0.034 </code></pre>
+  0.028   0.002   0.031 </code></pre>
 </div>
 </div>
 </div></div>
 </div>
 </section>
-<section id="dplyr---sql---show_query" class="slide level2">
-<h2>dplyr -&gt; SQL - <code>show_query()</code></h2>
+<section id="show_query---dplyr-to-sql" class="slide level2">
+<h2><code>show_query()</code> - dplyr to SQL</h2>
 <div class="small">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href></a><span class="fu">class</span>(oct_21)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1936,13 +1936,13 @@ WHERE (`month` = 10.0) AND (`day` = 21.0)</code></pre>
 </div>
 </section></section>
 <section>
-<section id="sql---r-dplyr" class="title-slide slide level1 center">
-<h1>SQL -&gt; R / dplyr</h1>
+<section id="sql-to-r-dplyr" class="title-slide slide level1 center">
+<h1>SQL to R / dplyr</h1>
 
 </section>
 <section id="running-sql-queries-against-r-objects" class="slide level2">
 <h2>Running SQL queries against R objects</h2>
-<p>There are two packages that implement this in R which take very different approaches,</p>
+<p>There are two packages that implement this in R which take different approaches,</p>
 <ul>
 <li><p><a href="https://github.com/ianmcook/tidyquery"><code>tidyquery</code></a> - this package parses your SQL code using the <code>queryparser</code> package and then translates the result into R / dplyr code.</p></li>
 <li><p><a href="https://github.com/ggrothendieck/sqldf"><code>sqldf</code></a> - transparently creates a database with the data and then runs the query using that database. Defaults to SQLite but other backends are available.</p></li>

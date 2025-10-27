@@ -486,7 +486,7 @@ system.time({
 
 
 
-## dplyr -> SQL - `show_query()`
+## `show_query()` - dplyr to SQL
 
 ::: {.small}
 ```{r}
@@ -596,12 +596,12 @@ oct_21 |> mutate(tailnum_n_prefix = grepl("^N", tailnum)) |> show_query()
 :::
 
 
-# SQL -> R / dplyr
+# SQL to R / dplyr
 
 
 ## Running SQL queries against R objects
 
-There are two packages that implement this in R which take very different approaches,
+There are two packages that implement this in R which take different approaches,
 
 * [`tidyquery`](https://github.com/ianmcook/tidyquery) - this package parses your SQL code using the `queryparser` package and then translates the result into R / dplyr code.
 
