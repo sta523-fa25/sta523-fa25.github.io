@@ -66,6 +66,10 @@ details>summary {
   font-size: 0.66em;
 }
 
+.mxsmall {
+  font-size: 0.575em;
+}
+
 .xxsmall {
   font-size: 0.5em;
 }
@@ -119,4 +123,8 @@ blockquote > p {
 .reveal section.center-image img {
   width: 45% !important;
   height: auto !important;
+}
+
+.extra-pb {
+  margin-bottom: 0.5em;
 }
