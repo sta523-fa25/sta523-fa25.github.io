@@ -303,8 +303,8 @@ schedule:
 
 - week: 11
   day: 0
-  lecture: "Dynamic UIs & Shiny Modules"
-  slides:
+  lecture: "bslib, dynamic UIs, and publishing"
+  slides: Lec20
   screencast:
   readings:
 
