@@ -11,12 +11,7 @@ ui = page_sidebar(
     h4("Prior:"),
     numericInput("alpha", "Prior # of head", min=0, value=5),
     numericInput("beta", "Prior # of tails", min=0, value=5),
-    checkboxInput("options", "Show Options", value = FALSE),
-    conditionalPanel(
-      "input.options == true",
-      checkboxInput("bw", "Use theme_bw", value = FALSE),
-      checkboxInput("facet", "Use facets", value = FALSE),
-    )
+    checkboxInput("options", "Show Options", value = FALSE)
   ),
   plotOutput("plot"),
   tableOutput("table")
@@ -49,17 +44,9 @@ server = function(input, output, session) {
   })
   
   output$plot = renderPlot({      
-    g = ggplot(d(), aes(x=p, y=density, color=distribution)) +
-    geom_line(linewidth=1.5) +
-    geom_ribbon(aes(ymax=density, fill=distribution), ymin=0, alpha=0.5)
-    
-    if (input$bw)
-    g = g + theme_bw()
-    
-    if (input$facet) 
-    g = g + facet_wrap(~distribution)
-    
-    g
+    ggplot(d(), aes(x=p, y=density, color=distribution)) +
+      geom_line(linewidth=1.5) +
+      geom_ribbon(aes(ymax=density, fill=distribution), ymin=0, alpha=0.5)
   })
   
   output$table = renderTable({

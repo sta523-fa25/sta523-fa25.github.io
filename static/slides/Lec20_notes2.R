@@ -2,11 +2,8 @@ library(tidyverse)
 library(shiny)
 library(bslib)
 
-library(ragg)
-options(shiny.useragg = TRUE)
-
 ui = page_sidebar(
-  theme = bs_theme(),
+  theme = bs_theme(bootswatch = "cyborg"),
   title = "Beta-Binomial Visualizer",
   sidebar = sidebar(
     h4("Data:"),
@@ -14,21 +11,22 @@ ui = page_sidebar(
     sliderInput("n", "# of flips", min=0, max=100, value=10),
     h4("Prior:"),
     numericInput("alpha", "Prior # of head", min=0, value=5),
-    numericInput("beta", "Prior # of tails", min=0, value=5),
-    checkboxInput("options", "Show Options", value = FALSE)
+    numericInput("beta", "Prior # of tails", min=0, value=5)
   ),
   card(
     card_header("Distributions"),
     card_body(
       plotOutput("plot"),
-    )
+    ),
+    full_screen = TRUE
   ),
   card(
     card_header(
       textOutput("summary_title"),
       popover(
-        fontawesome::fa("gear", a11y = "sem", title = "Settings"),
-        selectInput("summary_dist", "Distribution:", choices = c("posterior", "likelihood", "prior"))
+        bsicons::bs_icon("gear"),
+        title = "Settings",
+        selectInput("summary_dist", "Distribution:", choices = c("prior", "likelihood", "posterior"))
       ),
       class = "d-flex justify-content-between align-items-center"
     ),
@@ -71,14 +69,11 @@ server = function(input, output, session) {
   })
   
   output$plot = renderPlot({
-    current_theme = session$getCurrentTheme()
-
-    dist_colors = c(
-      prior = current_theme$danger %||% "#dc3545",
-      likelihood = current_theme$success %||% "#198754",
-      posterior = current_theme$primary %||% "#0d6efd"
-    )
-
+    current_theme = bs_current_theme()
+    
+    dist_colors = bs_get_variables(current_theme, c("danger", "success", "primary")) |>
+      setNames(c("prior", "likelihood", "posterior"))
+    
     ggplot(
       d(),
       aes(x=p, y=density, color=distribution)

@@ -10,20 +10,21 @@ ui = page_sidebar(
     sliderInput("n", "# of flips", min=0, max=100, value=10),
     h4("Prior:"),
     numericInput("alpha", "Prior # of head", min=0, value=5),
-    numericInput("beta", "Prior # of tails", min=0, value=5),
-    checkboxInput("options", "Show Options", value = FALSE)
+    numericInput("beta", "Prior # of tails", min=0, value=5)
   ),
   card(
     card_header("Distributions"),
     card_body(
       plotOutput("plot"),
-    )
+    ),
+    full_screen = TRUE
   ),
   card(
     card_header(
       textOutput("summary_title"),
       popover(
-        fontawesome::fa("gear", a11y = "sem", title = "Settings"),
+        bsicons::bs_icon("gear"),
+        title = "Settings",
         selectInput("summary_dist", "Distribution:", choices = c("prior", "likelihood", "posterior"))
       ),
       class = "d-flex justify-content-between align-items-center"
@@ -42,7 +43,7 @@ server = function(input, output, session) {
   bindEvent(input$n)
   
   output$summary_title = renderText({
-    paste("Summary Statistics for the", input$summary_dist)
+    paste(input$summary_dist, "summary statistics")
   })
   
   d = reactive({
@@ -83,9 +84,9 @@ server = function(input, output, session) {
     )
 
     dist_colors = list(
-      prior = "red",
-      likelihood = "green",
-      posterior = "blue"
+      prior = "danger",
+      likelihood = "success",
+      posterior = "primary"
     )
 
     stats = d() |>
@@ -107,10 +108,7 @@ server = function(input, output, session) {
         title = .y,
         value = .x,
         showcase = stat_icons[[.y]],
-        theme = value_box_theme(
-          fg = dist_colors[[input$summary_dist]],
-          bg = "white"
-        )
+        theme = dist_colors[[input$summary_dist]]
       )
     ) |>
       unname()
