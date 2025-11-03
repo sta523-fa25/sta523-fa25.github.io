@@ -396,7 +396,7 @@ layout_column_wrap(
 :::
 
 ## Nested Layouts
-  
+
 ::: {.xsmall}
 ```{bslib}
 #| output-location: slide
@@ -424,6 +424,31 @@ layout_column_wrap(
   )
 )
 ```
+:::
+
+
+## Dynamic UI components with `!!!`
+
+When building UIs dynamically (e.g., in `renderUI()`), you often need to pass a list of components to layout functions. The `!!!` operator (splice/unquote-splice) from rlang expands a list into individual arguments.
+
+::: {.small}
+```r
+# Create a list of cards
+cards = list(
+  card(card_header("Card 1"), "Content 1"),
+  card(card_header("Card 2"), "Content 2"),
+  card(card_header("Card 3"), "Content 3")
+)
+
+# Splice the list into layout_column_wrap
+layout_column_wrap(width = 1/3, !!!cards)
+```
+:::
+
+This can also be done with `do.call()` but `!!!` is often more readable and integrates better with tidyverse code.
+
+::: aside
+For either approach be careful about naming of list elements - these become argument names which may or may not do what you expect, particularly if the function uses `...`.
 :::
 
 
@@ -461,16 +486,11 @@ In a Shiny app dynamic theming can be enabled by including `bs_themer()` in the 
 
 Bootstrap provides a large number of built-in colors for styling html elements via CSS. Within these colors, a smaller subset are selected to create a color palette that is the basis for most themes and is used for the default styling of Bootstrap components. 
 
-![](imgs/bootstrap-colors.png){width=50% fig-align=center}
-
-
-
-## Bootstrap color usage
-
-From the Bootstrap documentation the following are the general use cases for each of these colors,
-
-
-::: {.small}
+::: {.columns}
+::: {.column}
+![](imgs/bootstrap-colors.png){width=100% fig-align=center}
+:::
+::: {.column .xsmall}
 * *Primary* - Main theme color, used for hyperlinks, focus styles, and component and form active states.
 
 * *Secondary* -  used to complement the primary color without drawing too much attention, used for less prominent UI elements.
@@ -487,10 +507,14 @@ From the Bootstrap documentation the following are the general use cases for eac
 
 * *Dark* - Additional theme option for higher contrasting colors.
 :::
+:::
+
+
+
 
 ## Bootstrap theme colors with Shiny
 
-These theme colors can be specifically applied to some Shiny elements using the `class` argument. 
+Theme colors can be specifically applied to most Shiny elements using the `class` argument. 
 
 ::: {.xsmall}
 ```{bslib}
@@ -514,7 +538,7 @@ actionLink("danger", "Danger", class = c("link-info","bg-success"))
 
 ## thematic
 
-is a package that provides a way of simplifying the process of theming ggplot2, lattice, and base R graphics. However, it also provides a way to automatically integrate these themes with Shiny apps, RMarkdown and Quarto documents.
+This package provides a way of simplifying the process of theming ggplot2, lattice, and base R graphics. Additionally, it also provides mechanisms to automatically integrate these themes with Shiny apps, RMarkdown and Quarto documents.
 
 While it is not perfect, it can do much of the heavy lifting and can get you close to a working theme with a minimal amount of intervention.
 
