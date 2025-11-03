@@ -375,3 +375,7 @@ schedule:
 - week: 14
   day: 2
   lecture: "<i>No class - Thanksgiving Break</i>"
+
+- week: 16
+  day: 4
+  lecture: "<i>Final project due by 11:59 pm</i>"
