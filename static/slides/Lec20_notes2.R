@@ -3,7 +3,7 @@ library(shiny)
 library(bslib)
 
 ui = page_sidebar(
-  theme = bs_theme(bootswatch = "cyborg"),
+  theme = bs_theme(),
   title = "Beta-Binomial Visualizer",
   sidebar = sidebar(
     h4("Data:"),

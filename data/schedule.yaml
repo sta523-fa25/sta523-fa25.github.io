@@ -312,13 +312,15 @@ schedule:
 - week: 11
   day: 2
   lecture: "Profiling & Parallelization"
-  slides:
+  slides: Lec21
   screencast:
   readings:
     - text: "parallel Vignettes"
       link: https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf
-    - text: "furrr"
-      link: https://furrr.futureverse.org/
+    - text: "mirai"
+      link: https://mirai.r-lib.org/
+    - text: "Futureverse"
+      link: https://www.futureverse.org/
   suppmat:
 
 - week: 12
