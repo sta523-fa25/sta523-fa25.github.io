@@ -336,7 +336,7 @@ schedule:
 - week: 12
   day: 2
   lecture: "Tidy Models"
-  slides:
+  slides: Lec23
   screencast:
   readings:
     - text: "Tidy Models - Get Started"
