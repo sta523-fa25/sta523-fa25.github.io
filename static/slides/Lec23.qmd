@@ -241,7 +241,23 @@ lm_tm |>
 ![](imgs/hex_parsnip.png){fig-align="center" width="75%"}
 
 
-## Why do we care?
+## Models?
+
+![](imgs/ml_illustration.jpg){fig-align="center" width="75%"}
+
+
+::: {.aside}
+Illustration from <https://vas3k.com/blog/machine_learning/>
+:::
+
+## Parsnip models
+
+<iframe data-src="https://www.tidymodels.org/find/parsnip/" width="100%" height="500px" style="border:1px solid;border-radius: 5px;" data-external="1">
+</iframe>
+
+
+
+## Other linear regression engines
 
 :::: {.columns .xsmall}
 ::: {.column width='40%'}
