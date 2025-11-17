@@ -267,7 +267,7 @@ schedule:
       link: http://shiny.rstudio.com/gallery/widget-gallery.html
     - text: Mastering Shiny
       link: https://mastering-shiny.org/
-    - text: posit conf 2025 - shiny workshop
+    - text: posit::conf 2025 - shiny workshop
       link: https://posit-conf-2025.github.io/shiny-r/
   suppmat:
 
@@ -349,6 +349,8 @@ schedule:
   screencast:
   slides: Lec24
   readings:
+    - text: "posit::conf 2025 - Tidy Models Workshop"
+      link: https://workshops.tidymodels.org/
   suppmat:
 
 - week: 13
