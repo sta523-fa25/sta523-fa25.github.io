@@ -365,7 +365,7 @@ schedule:
 
 - week: 14
   day: 0
-  lecture: "<i>TBD</i>"
+  lecture: "Rcpp"
   screencast:
   slides:
   suppmat:
