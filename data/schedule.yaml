@@ -347,7 +347,7 @@ schedule:
   day: 0
   lecture: "Model Tuning"
   screencast:
-  slides:
+  slides: Lec24
   readings:
   suppmat:
 
