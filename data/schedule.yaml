@@ -355,14 +355,12 @@ schedule:
 
 - week: 13
   day: 2
-  lecture: "Building APIs with R (plumber)"
-  slides:
+  lecture: "Building APIs with R (plumber2)"
+  slides: Lec25
   screencast:
   readings:
-    - text: plumber documentation
-      link: https://www.rplumber.io/index.html
-    - text: plumber webinar
-      link: https://posit.co/resources/videos/expanding-r-horizons-integrating-r-with-plumber-apis/
+    - text: plumber2
+      link: https://plumber2.posit.co/
 
 
 - week: 14
