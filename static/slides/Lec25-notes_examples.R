@@ -60,7 +60,7 @@ function(query) {
 #* 
 #* @get /request
 #*
-function(request, query) {
+function(request) {
   list(
     url = request$url,
     method = request$method,

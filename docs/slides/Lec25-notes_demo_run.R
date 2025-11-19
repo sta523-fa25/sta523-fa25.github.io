@@ -9,17 +9,15 @@ test_data = request(url) |>
   resp_body_json() |>
   bind_rows()
 
-pred_data = test_data |>
-  select(-species)
-
-predictions = request(url) |>
+pred = request(url) |>
   req_url_path_append("predict") |>
-  req_body_json(pred_data) |>
+  req_body_json(test_data) |>
   req_perform() |>
   resp_body_json() |>
-  bind_rows()
+  bind_rows() |>
+  mutate(
+    species = as.factor(species),
+    .pred_class = as.factor(.pred_class)
+  )
 
-predictions |>
-  select(species = .pred_class, starts_with(".pred_")) |>
-  bind_cols(actual = test_data$species) |>
-  mutate(correct = species == actual)
+yardstick::conf_mat(pred, truth = species, estimate = .pred_class)

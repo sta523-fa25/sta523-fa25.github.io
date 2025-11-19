@@ -1073,14 +1073,16 @@ Dr. Colin Rundel
 <h2>plumber2</h2>
 <p>plumber and plumber2 are R packages that allow you to create RESTful APIs using specially annotated R scripts.</p>
 <p>Both packages make use of a Roxygen-like syntax to provide annotations (decorators) to R functions that then become the API endpoints with specific parameter, behaviors, etc.</p>
-<p>plumber2 is a complete rewrite of plumber and it provides a more modern and flexible interface, improved performance, and additional features. The APIs between the two packages are not compatible.</p>
-<p>Like shiny - the package handles all the necessary processing as well as the launching of the necessary web server to host the API.</p>
+<div class="fragment">
+<p><br></p>
+<p>plumber2 is a complete rewrite of the original package and it provides a more modern and flexible interface, improved performance, and additional features. The APIs between the two packages are not compatible.</p>
+</div>
 </section>
 <section id="a-basic-endpoint" class="slide level2">
 <h2>A basic endpoint</h2>
 <p>A plumber2 API is just an R script that defines one or more of R functions that have specifically formatted comments that define the endpoint behavior.</p>
 <p>Annotations are specified using <code>#*</code> comments directly above the function definition. Annotation keywords usign the <code>@</code> symbol.</p>
-<p>For example the script below defines a single endpoint that responds to <code>GET</code> requests at the <code>/hello</code> path and returns the string “hello world”. Note the</p>
+<p>For example the script below defines a single endpoint that responds to <code>GET</code> requests at the <code>/hello</code> path and returns the string “hello world” as json.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href></a><span class="co">#* Return &quot;hello world&quot;</span></span>
 <span id="cb1-2"><a href></a><span class="co">#* @get /hello</span></span>
 <span id="cb1-3"><a href></a><span class="cf">function</span>() {</span>
@@ -1088,7 +1090,7 @@ Dr. Colin Rundel
 <span id="cb1-5"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 <aside><div>
-<p><code>#*</code> is used here to avoid conflicts with roxygen comments - plumber supported both which occasionally caused issues.</p>
+<p><code>#*</code> is used here instead of <code>#&#39;</code>’ to avoid conflicts with roxygen comments - plumber supported both which occasionally caused issues.</p>
 </div></aside></section>
 <section id="running-your-api" class="slide level2">
 <h2>Running your API</h2>
@@ -1096,6 +1098,7 @@ Dr. Colin Rundel
 <p>The API can then be launched using <code>api_run()</code> and stopped using <code>api_stop()</code>. When used interactively (i.e. in RStudio) the API will run in the background and not block your session.</p>
 <p>Both the host/ip and port can be configured via <code>api()</code> or <code>api_run()</code>.</p>
 <div class="fragment">
+<p><br></p>
 <p>One important note is that plumber2 is relatively new and does not have full integration into RStudio yet and in most cases the IDE will get confused and assume your script is a plumber API - make sure to check what is actually running!</p>
 
 </div>
@@ -1104,7 +1107,7 @@ Dr. Colin Rundel
 </div></aside></section>
 <section id="handler-methods" class="slide level2">
 <h2>Handler methods</h2>
-<p>When defining an endpoint you must specify the HTTP method(s) that the endpoint will respond to. As we just saw this is done using <code>@</code>+method keywords in your annotations.</p>
+<p>When defining an endpoint you must specify the HTTP method(s) that the endpoint will respond to. As we just saw this is done using <code>@</code>method keywords in your annotations.</p>
 <p>Each of your plumber2 endpoints can support one or more of the following verbs:</p>
 <div class="columns">
 <div class="column" style="width:33%;">
@@ -1154,15 +1157,15 @@ Dr. Colin Rundel
 <h2>Endpoint inputs</h2>
 <p>When making requests to an API endpoint, data can be passed in a number of different ways:</p>
 <ul>
-<li><p>Via the path - e.g. <code>@get /user/&lt;id&gt;</code></p></li>
-<li><p>via a query string - e.g. <code>@get /user?id=1231</code></p></li>
+<li><p>Via the path - e.g. <code>GET /user/&lt;id&gt;</code></p></li>
+<li><p>via a query string - e.g. <code>GET /user?id=1231</code></p></li>
 <li><p>or via the body of the request - e.g. <code>POST</code> or <code>PUT</code> requests</p></li>
 </ul>
 </section>
 <section id="path-parameters" class="slide level2">
 <h2>Path parameters</h2>
-<p>Path parameters are indicated in the method annotations using <code>&lt;&gt;</code> around the parameter name.</p>
-<p>Each parameter specified in the path must have a corresponding argument in the function definition.</p>
+<p>Path parameters are indicated in the method annotation using <code>&lt;&gt;</code> around the parameter name.</p>
+<p>Each parameter specified in the path <em>must</em> have a corresponding argument in the function definition.</p>
 <p>While not required, it is good practice to include <code>@param</code> annotations for each parameter to document their purpose.</p>
 <div class="fragment">
 <div class="xsmall">
@@ -1183,8 +1186,8 @@ Dr. Colin Rundel
 <section id="path-priority" class="slide level2">
 <h2>Path priority</h2>
 <p>While this does not typically come up, it is helpful to understand how plumber2 handles potentially ambiguous paths.</p>
-<p>When multiple endpoints could match a given request path, plumber2 uses the following priority rules to determine which endpoint to invoke:</p>
-<div class="small center">
+<p>When multiple endpoints could match a given request path, plumber2 works through endpoints from least to most ambiguous, e.g.</p>
+<div class="center">
 <ol type="1">
 <li><p><code>/path/to/something/specific</code></p></li>
 <li><p><code>/path/to/&lt;name&gt;/specific</code></p></li>
@@ -1196,7 +1199,7 @@ Dr. Colin Rundel
 </section>
 <section id="query-parameters" class="slide level2">
 <h2>Query parameters</h2>
-<p>For endpoints users may pass in additional arguments using query strings, e.g. <code>?q=bread&amp;pretty=1</code> at the end of the URL.</p>
+<p>Users may also pass in additional arguments using query strings, e.g. <code>?q=bread&amp;pretty=1</code> at the end of a URL.</p>
 <p>plumber2 will automatically parse these into a named list which can be accessed via the reserved <code>query</code> argument in the endpoint function.</p>
 <p>Similar to path parameters additional documentation on query parameters can be provided via <code>@query</code> annotations.</p>
 <div class="fragment">
@@ -1271,12 +1274,14 @@ Dr. Colin Rundel
 <section id="request-body" class="slide level2">
 <h2>Request body</h2>
 <p>Both path and query parameters are passed in via the URL - this works for relatively small amounts of data but is not a good option for larger payloads.</p>
-<p>Larger data can be passed in the body of the request - this is typically used with <code>PUT</code>, <code>POST</code>, and <code>PATCH</code> requests. The size limit varies a lot depending on the API server configuration but is typically around ~2MB by default.</p>
+<p>Larger data can be passed in the body of the request - this is typically used with <code>PUT</code>, <code>POST</code>, and <code>PATCH</code> requests. The size limit varies a lot depending on the API server configuration but is typically around ~1-10MB.</p>
 <div class="fragment">
-<p>By default plumber2 will attempt to parse the body based on the <code>Content-Type</code> header of the request. Further control can be achieved using the <code>@parser</code> annotation - there are a large number of built-in parsers available and custom parsers can also be defined.</p>
+<p>
+</p><p>By default plumber2 will attempt to parse the body based on the <code>Content-Type</code> header of the request. Further control can be achieved using the <code>@parser</code> annotation - there are a large number of built-in parsers available and custom parsers can also be defined.</p>
 </div>
 <div class="fragment">
-<p>The result of parsing the body is made available to the endpoint function via the reserved <code>body</code> argument.</p>
+<p>
+</p><p>The result of parsing the body is made available to the endpoint function via the reserved <code>body</code> argument.</p>
 </div>
 </section>
 <section id="serialization" class="slide level2">
@@ -1357,7 +1362,7 @@ Dr. Colin Rundel
 </div></aside></section>
 <section id="plot-output" class="slide level2">
 <h2>Plot output</h2>
-<div class="small">
+<div class="xsmall">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href></a><span class="co">#* Plot out data from the palmer penguins dataset</span></span>
 <span id="cb6-2"><a href></a><span class="co">#*</span></span>
 <span id="cb6-3"><a href></a><span class="co">#* @get /plot</span></span>
@@ -1389,14 +1394,29 @@ Dr. Colin Rundel
 </section>
 <section id="request" class="slide level2">
 <h2><code>request</code></h2>
-<p>One additional reserved argument available to plumber2 endpoint functions is <code>request</code>. This is a <a href="https://reqres.data-imaginist.com/reference/Request.html"><code>reqres</code></a> object that provides access to the full HTTP request details as an R6 object.</p>
+<p>An additional reserved argument available to plumber2 endpoint functions is <code>request</code>. This is a <a href="https://reqres.data-imaginist.com/reference/Request.html"><code>reqres</code></a> object that provides access to the full HTTP request details as an R6 object.</p>
 <p>From this it is possible to get access to: cookies, headers, raw query string, raw body content, and much more.</p>
+<div class="xsmall">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href></a><span class="co">#* Example of capturing a request</span></span>
+<span id="cb7-2"><a href></a><span class="co">#* </span></span>
+<span id="cb7-3"><a href></a><span class="co">#* @get /request</span></span>
+<span id="cb7-4"><a href></a><span class="co">#*</span></span>
+<span id="cb7-5"><a href></a><span class="cf">function</span>(request) {</span>
+<span id="cb7-6"><a href></a>  <span class="fu">list</span>(</span>
+<span id="cb7-7"><a href></a>    <span class="at">url =</span> request<span class="sc">$</span>url,</span>
+<span id="cb7-8"><a href></a>    <span class="at">method =</span> request<span class="sc">$</span>method,</span>
+<span id="cb7-9"><a href></a>    <span class="at">headers =</span> request<span class="sc">$</span>headers,</span>
+<span id="cb7-10"><a href></a>    <span class="at">body_raw =</span> request<span class="sc">$</span>body_raw</span>
+<span id="cb7-11"><a href></a>  )</span>
+<span id="cb7-12"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="response-server" class="slide level2">
 <h2><code>response</code> &amp; <code>server</code></h2>
 <p>Similar to <code>request</code>, the <code>response</code> reserved argument provides access to a <a href="https://reqres.data-imaginist.com/reference/Response.html"><code>reqres</code></a> response object that represents the HTTP response.</p>
 <p>Normally, plumber2 will construct this object for you, but if necessary you can modify it directly to set custom headers, cookies, status codes, and body content.</p>
 <div class="fragment">
+<p><br></p>
 <p>Finally, the <code>server</code> reserved argument provides access to the underlying plumber2 API server object itself. This is useful for advanced use cases.</p>
 </div>
 </section>
@@ -1404,22 +1424,25 @@ Dr. Colin Rundel
 <h2>Errors</h2>
 <p>Plumber2 wraps all endpoints to handle errors that occur during execution.</p>
 <div class="small">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href></a><span class="co">#* Example of throwing an error</span></span>
-<span id="cb7-2"><a href></a><span class="co">#* @get /simple</span></span>
-<span id="cb7-3"><a href></a><span class="cf">function</span>() {</span>
-<span id="cb7-4"><a href></a>  <span class="fu">stop</span>(<span class="st">&quot;I&#39;m an error!&quot;</span>)</span>
-<span id="cb7-5"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a><span class="co">#* Example of throwing an error</span></span>
+<span id="cb8-2"><a href></a><span class="co">#* @get /simple</span></span>
+<span id="cb8-3"><a href></a><span class="cf">function</span>() {</span>
+<span id="cb8-4"><a href></a>  <span class="fu">stop</span>(<span class="st">&quot;I&#39;m an error!&quot;</span>)</span>
+<span id="cb8-5"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <p>By default these errors will return a generic 500 Internal Server Error response to the user. However, plumber2 (and reqres) provides a number of helper functions to generate more friendly error messages with appropriate HTTP status codes.</p>
 <div class="small">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a><span class="co">#* Generate a friendly error</span></span>
-<span id="cb8-2"><a href></a><span class="co">#* @get /friendly</span></span>
-<span id="cb8-3"><a href></a><span class="cf">function</span>() {</span>
-<span id="cb8-4"><a href></a>  <span class="fu">abort_bad_request</span>(</span>
-<span id="cb8-5"><a href></a>    <span class="st">&quot;Your request could not be parsed&quot;</span></span>
-<span id="cb8-6"><a href></a>  )</span>
-<span id="cb8-7"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href></a><span class="co">#* Generate a friendly error</span></span>
+<span id="cb9-2"><a href></a><span class="co">#* @get /friendly</span></span>
+<span id="cb9-3"><a href></a><span class="cf">function</span>() {</span>
+<span id="cb9-4"><a href></a>  <span class="fu">abort_bad_request</span>(</span>
+<span id="cb9-5"><a href></a>    <span class="st">&quot;Your request could not be parsed&quot;</span></span>
+<span id="cb9-6"><a href></a>  )</span>
+<span id="cb9-7"><a href></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="xsmall">
+<p>Note - As of right now (v0.1.0) this latter example does not seem to be working as expected - this is likely to be fixed in a future release.</p>
 </div>
 </div>
 </section>
