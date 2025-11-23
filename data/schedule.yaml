@@ -367,7 +367,14 @@ schedule:
   day: 0
   lecture: "Rcpp"
   screencast:
-  slides:
+  slides: Lec26
+  readings:
+    - text: Adv-R - Rewriting R code in C++
+      link: http://adv-r.had.co.nz/Rcpp.html
+    - text: Rcpp Gallery
+      link: https://gallery.rcpp.org/
+    - text: Rcpp for Everyone
+      linl: https://teuder.github.io/rcpp4everyone_en/
   suppmat:
 
 - week: 14
