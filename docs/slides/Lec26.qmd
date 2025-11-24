@@ -48,7 +48,7 @@ From "Extending R with C++ - "A Brief Introduction to Rcpp":
 ## C++ Types
 
 ::: {.medium}
-| Type                 | Size            | Description                            | Value Range
+| Type                 | Size (bits)     | Description                            | Value Range
 |----------------------|:---------------:|----------------------------------------|-------------------------------------
 | `bool`               | 1*              | Logical value: `true` or `false`       | `true` or `false`
 | `char`               | 8               | Character (ASCII or UTF8)              | $\pm 127$
@@ -59,14 +59,16 @@ From "Extending R with C++ - "A Brief Introduction to Rcpp":
 | `double`             | 64              | Large floating point value             | $\pm 10^{-308}$ to $\pm 10^{308}$
 :::
 
-::: {.center}
+<br/>
+
+::: {.center .large}
 \+  many more
 :::
 
 ## R types vs C++ types
 
 ::: {.medium}
-All of the basic types in R are vectors by default, in C++ the types we just discussed are all scalar. So it is necessary to have one more level of abstraction to translate between the two. Rcpp provides for this with several built in classes:
+All of the basic types in R are vectors by default, the C++ types just shown are all *scalars*. So it is necessary to have one more level of abstraction to translate between the two. Rcpp provides for this with several built in classes:
 :::
 
 ::: {.small}
@@ -85,9 +87,14 @@ All of the basic types in R are vectors by default, in C++ the types we just dis
 |                        | `Rcpp::S4`               | `S4`              |
 :::
 
+::: {.aside}
+Rcpp also has direct support for common STL vector types: (e.g. `std::vector<double>`, etc.)
+:::
+
+
 ## Trying things out
 
-Rcpp provides some helpful functions for trying out simple C++ expressions (`evalCpp`), functions (`cppFunction`), or cpp files (`sourceCpp`). It is even possible to include C++ code in Rmd / qmd documents using the Rcpp [engine](https://bookdown.org/yihui/rmarkdown/language-engines.html#rcpp).
+Rcpp provides some helpful functions for compiling and running simple C++ expressions (`evalCpp`), functions (`cppFunction`), or cpp files (`sourceCpp`). It is even possible to include C++ code in Rmd / qmd documents using the Rcpp [engine](https://bookdown.org/yihui/rmarkdown/language-engines.html#rcpp).
 
 ```{r}
 evalCpp("2+2")
@@ -107,7 +114,7 @@ evalCpp("2+2", verbose = TRUE, rebuild = TRUE)
 
 ## C++ functions as R functions
 
-::: {.small}
+::: {.xsmall}
 ```{r, error=TRUE}
 cppFunction('
   double cpp_mean(double x, double y) {
@@ -119,7 +126,7 @@ cppFunction('
 
 . . .
 
-:::: {.columns .small}
+:::: {.columns .xsmall}
 ::: {.column width='50%'}
 ```{r}
 cpp_mean
@@ -139,7 +146,7 @@ cpp_mean(c(1,2), c(1,2))
 
 ## Using `sourceCpp`
 
-::: {.small}
+::: {.medium}
 This allows for an entire `.cpp` source file to be compiled and loaded into R. This is generally the preferred way of working with C++ code and is well supported by RStudio (i.e. provides syntax highlights, tab completion, etc.)
 :::
 
@@ -180,13 +187,12 @@ using namespace Rcpp;
 
 ## Example
 
-The following would be avaiable as a file called `mean.cpp` or similar.
-
 ::: {.small}
+::: {.code-file .sourceCode .cell-code}
+`r fontawesome::fa("file")` `mean.cpp`
+:::
 ```{Rcpp}
 #include <Rcpp.h>
-
-//[[Rcpp::plugins(cpp11)]]
 
 //[[Rcpp::export]]
 double cpp_mean(double x, double y) {
@@ -276,6 +282,10 @@ cpp11_mean(1:10)
 ls(envir = Rcpp:::.plugins)
 ```
 
+::: {.aside}
+Using `//[[Rcpp::plugins(cpp11)]]` is not strictly necessary as C++17 is now the default standard for R packages as of R 4.3.0
+:::
+
 
 ## Rcpp Sugar
 
@@ -337,9 +347,14 @@ rcpp_mean(y)
 :::
 ::::
 
+::: {.aside}
+All functions are returning double here - regardless of input type.
+:::
+
+
 ## Integer mean
 
-::: {.xsmall}
+::: {.mxsmall}
 ```{Rcpp}
 #include <Rcpp.h>
 //[[Rcpp::plugins(cpp11)]]
@@ -557,7 +572,7 @@ make_df(10)
 :::
 
 
-## Creating a `tbl`
+## Creating a tibble
 
 ::: {.small}
 ```{Rcpp}
@@ -583,7 +598,7 @@ make_tbl(10)
 
 ## Printing
 
-R has some weird behavior when it comes to printing text from C++, Rcpp has function that resolves this, `Rcout` 
+R has some weird behavior when it comes to printing text from C++, use `Rcout` rather than `std::cout`.
 
 ::: {.small}
 ```{Rcpp}
@@ -1039,14 +1054,14 @@ $$
 
 To generate draws from an $n$-dimensional multivate normal with mean $\underset{n \times 1}{\boldsymbol{\mu}}$ and covariance matrix $\underset{n \times n}{\boldsymbol{\Sigma}}$, 
 
-* Find a matrix $\underset{n \times n}{\boldsymbol{A}}$ such that $\boldsymbol{\Sigma} = \boldsymbol{A}\,\boldsymbol{A}^t$
+* Find a matrix $\underset{n \times n}{\boldsymbol{L}}$ such that $\boldsymbol{\Sigma} = \boldsymbol{L}\,\boldsymbol{L}^t$
 
-    * most often we use $\boldsymbol{A} = \text{Chol}(\boldsymbol{\Sigma})$ where $\boldsymbol{A}$ is a lower triangular matrix.
+    * most often we use $\boldsymbol{L} = \text{Chol}(\boldsymbol{\Sigma})$ where $\boldsymbol{L}$ is a lower triangular matrix.
 
 * Draw $n$ iid unit normals, $N(0,1)$, as $\underset{n \times 1}{\boldsymbol{z}}$ 
 
 * Obtain multivariate normal draws using
-$$ \underset{n \times 1}{\boldsymbol{y}} = \underset{n \times 1}{\boldsymbol{\mu}} + \underset{n \times n}{\boldsymbol{A}} \, \underset{n \times 1}{\boldsymbol{z}} $$
+$$ \underset{n \times 1}{\boldsymbol{y}} = \underset{n \times 1}{\boldsymbol{\mu}} + \underset{n \times n}{\boldsymbol{L}} \, \underset{n \times 1}{\boldsymbol{z}} $$
 
 
 ## Multivariate Normal Distribution - Density

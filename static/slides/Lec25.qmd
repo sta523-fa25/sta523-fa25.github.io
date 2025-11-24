@@ -1,6 +1,6 @@
 ---
 title: "Building APIs with R<br/>plumber2"
-subtitle: "Lecture 15"
+subtitle: "Lecture 25"
 author: "Dr. Colin Rundel"
 footer: "Sta 523 - Fall 2025"
 format:

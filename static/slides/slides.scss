@@ -128,3 +128,14 @@ blockquote > p {
 .extra-pb {
   margin-bottom: 0.5em;
 }
+
+.reveal .code-file {
+  background-color: #ECECEC;
+  margin-bottom: 2px !important;
+}
+
+.reveal .code-file p {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-left: 0.8em;
+}
